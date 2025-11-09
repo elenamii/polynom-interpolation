@@ -13,7 +13,7 @@ for i in range(anzahl):
     y_wert.append(y)
 
 
-#polynom adition
+#polynom addition
 def poly_add(p,q):
 	result=[]
 	max_length= max(len(p), len(q))
