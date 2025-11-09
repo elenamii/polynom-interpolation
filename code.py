@@ -31,10 +31,33 @@ def poly_add(p,q):
 			
 	return result
 
-#test poy_add mit bsp-polynomen 
+#test poly_add mit bsp-polynomen 
 p = [1,2,3]
 q = [5,6]	
 print(poly_add(p,q)) #expect: [6, 8, 3]
+
+#polynom multiplication
+def poly_mult(p,q):
+	result_length = len(p) + len(q) -1
+	result =[0] * result_length 
+
+	for i in range (len(p)):
+		for j in range (len(q)):
+			p_koeff = p[i]
+			q_koeff = q[j]
+
+			product = p_koeff * q_koeff #12
+
+			position = i+j # 2
+
+			result[position] = result[position] + product
+			#[0,0,12,0]
+
+	return result
+
+# test poly_mult mit bsp-polynomen 
+print(poly_mult(p,q)) # expect [5, 16, 27, 18]
+
 
 
 
