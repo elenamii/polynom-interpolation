@@ -1,0 +1,60 @@
+# Code Dokumentation
+
+In diesem Dokument werden Funktionen, Methoden und andere theoretische Grundlagen erklärt bzw. dokumentiert.
+
+## poly_add Theorie
+
+```text
+p = [1,2,3] --> 1*x^0 + 2*x^1 + 3*x^2
+q = [5,6]   --> 5*x^0 + 6*x^1
+
+p(x) + q(x) = (1+5)*x^0 + (2+6)*x^1 + (3+0)*x^2
+            = (1+5) + (2+6)x + (3+0)x^2
+            --> Array aus Koeffizienten: [6, 8, 3]
+```
+
+## poly_add Funktion
+
+**INPUT:**
+- `p`: Liste von Koeffizienten eines Polynoms
+- `q`: Liste von Koeffizienten eines anderen Polynoms
+
+**OUTPUT:**
+- Liste von Koeffizienten des Summenpolynoms
+
+**BESONDERHEITEN:**
+- Wenn ein Polynom kürzer ist (also kleiner als `max_length`), werden die fehlenden Koeffizienten wie Nullen behandelt.
+- `try/except IndexError` wird verwendet, um zu erkennen, dass ein Polynom kürzer ist. Wenn man auf einen nicht vorhandenen Index zugreift, kommt der Fehler „Index out of range“, und in diesem Fall wird der fehlende Koeffizient automatisch auf 0 gesetzt.
+
+---
+
+## poly_mult Theorie
+
+```text
+p = [1,2,3] --> 1*x^0 + 2*x^1 + 3*x^2
+q = [5,6]   --> 5*x^0 + 6*x^1
+
+p(x) * q(x) = 1*5 + 1*6x + 2x*5 + 2x*6x + 3x^2*5 + 3x^2*6x
+            = 1*5 + (1*6 + 2*5)x + (2*6 + 3*5)x^2 + (3*6)x^3
+            = 5 + 16x + 27x^2 + 18x^3
+            --> Array aus Koeffizienten: [5, 16, 27, 18]
+```
+
+## poly_mult Funktion
+
+**INPUT:**
+- `p`: Liste von Koeffizienten eines Polynoms
+- `q`: Liste von Koeffizienten eines anderen Polynoms
+
+**OUTPUT:**
+- Liste von Koeffizienten des Produktpolynoms
+
+**BESONDERHEITEN:**
+- Länge des Ergebnisses = `len(p) + len(q) - 1`
+- Liste wird erst mit Nullen gefüllt: `result = [0] * (len(p) + len(q) - 1)`
+  - Produkte können direkt an Index `i + j` addiert werden.
+- Jede Schleife geht durch alle Koeffizienten:
+  - Iteration über alle Koeffizienten von `p` und `q`
+  - Alle Kombinationen werden multipliziert: `p[i] * q[j]`
+- Addieren an der richtigen Position: Index `position = i + j` → Potenz von `x`
+- Produkte werden aufaddiert, falls mehrere Terme die gleiche Potenz haben: `result[position] += p[i] * q[j]`
