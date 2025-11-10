@@ -1,3 +1,8 @@
+import numpy as np #Benötigt für numerische BErsechnungen
+import matplotlib.pyplot as plt #Benötigt für Plotten von Graphen aber glaube das brauchen wir nicht
+
+#plt.style.use('seaborn-poster')
+
 
 #stützstellen und -werte werden abgefragt und gespeichert 
 anzahl = int(input("Gewünschte ANZAHL Stützstellen eingeben: ")) #0 handeling fehlt
@@ -64,7 +69,7 @@ print(poly_mult(p,q)) # expect [5, 16, 27, 18]
 
 #Des Weiteren soll die Newton-Basis ausgegeben werden.
 
-
+#plt.show() zeigt Plots an falls wir die Polynome auslesen wollen / visualisieren wollen
 
 
 
