@@ -1,23 +1,32 @@
 Erstellen Sie ein Programm, welches eine beliebige Anzahl Stützstellen mit
 zugehörenden Stützwerten einlesen kann.
+
 Das Programm soll in der Lage sein die Lagrange-Polynome (-Basis) auszugeben.
-Des Weiteren soll die Newton-Basis ausgegeben werden. Beide Polynombasen
-bitte in ausmultiplizierter Form (Normalform des Polynoms…)
+
+Des Weiteren soll die Newton-Basis ausgegeben werden.
+ Beide Polynombasenbitte in ausmultiplizierter Form (Normalform des Polynoms…)
+
 Mit den eingegebenen Stützwerten soll Ihr Programm die Interpolierende
 mittels der Lagrange-Basis und/oder Dividierter Differenzen und Newton-Basis
 berechnen und in Normalform ausgeben.
+
 Bedenken Sie die Möglichkeit mehrere gleiche Stützstellen angeben zu können.
 Die zu den gleichen Stützstellen angegebenen Stützwerte müssen dann der
 Reihe nach der Stützwert und danach die Ableitungswerte (1., 2., usw.) sein.
+
 Diese Möglichkeit sollte dann automatisch zur Hermite-Interpolation führen.
+
 Ihr Programm sollte eine Funktion zum Multiplizieren von Polynomen enthalten.
 Sie werden diese Funktion zum Ausmultiplizieren von den in der Interpolation
 auftretenden Linearfaktoren nutzen.
 Eingabe und Ausgabe des Ausmultiplizierens werden Arrays sein, die zur
 internen Darstellung von Polynomen genutzt werden.
+
 Auch diese Funktion sollte eigenständig testbar sein.
+
 Bedenken Sie dabei, dass die Lagrange-Interpolation eine Auswertung eines
 Polynoms an einer Stelle x benötigt. Verwenden Sie dabei bitte das Horner
 Schema.
+
 Die Auswertung des Interpolationspolynoms (egal welche Interpolation) sollte
 ebenso eigenständig getestet werden können.
