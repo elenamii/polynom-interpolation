@@ -58,6 +58,13 @@ def poly_mult(p,q):
 # test poly_mult mit bsp-polynomen 
 print(poly_mult(p,q)) # expect [5, 16, 27, 18]
 
+ #Beide Polynombasenbitte in ausmultiplizierter Form (Normalform des Polynoms…)
+
+#Das Programm soll in der Lage sein die Lagrange-Polynome (-Basis) auszugeben.
+
+#Des Weiteren soll die Newton-Basis ausgegeben werden.
+
+
 
 
 

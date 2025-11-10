@@ -30,3 +30,12 @@ Schema.
 
 Die Auswertung des Interpolationspolynoms (egal welche Interpolation) sollte
 ebenso eigenständig getestet werden können.
+
+NEWTON POLY
+https://pythonnumericalmethods.studentorg.berkeley.edu/notebooks/chapter17.05-Newtons-Polynomial-Interpolation.html
+
+LAGRANGE POLY
+https://pythonnumericalmethods.studentorg.berkeley.edu/notebooks/chapter17.04-Lagrange-Polynomial-Interpolation.html
+
+HERMITE
+https://jordan-hay.github.io/jekyll/update/2023/10/30/hermite.html
