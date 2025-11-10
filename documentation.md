@@ -58,3 +58,16 @@ p(x) * q(x) = 1*5 + 1*6x + 2x*5 + 2x*6x + 3x^2*5 + 3x^2*6x
   - Alle Kombinationen werden multipliziert: `p[i] * q[j]`
 - Addieren an der richtigen Position: Index `position = i + j` → Potenz von `x`
 - Produkte werden aufaddiert, falls mehrere Terme die gleiche Potenz haben: `result[position] += p[i] * q[j]`
+
+**POLYNOM SCHREIBWEISE**
+- das ausgegebene Array muss umgewandelt werden in feste INTEGER -> dann löst sich auch das Problem von negativen Zahlen (funktioniert das mit INT (eig ja))
+- je nach Länge des Arrays muss umgekehrt ausgegeben werden
+- [i0,i1,i2] usw
+- = [1,2,3]
+- 1x^0 + 2x^1 (=2x) + 3x^2 usw
+- > Ausgabe Polynomschreibweise
+- Ausgabe muss umgekehrt werden, i0 kann nicht ^0 sein, weil bei Polynomschreibweise ist das erste dementsprechend, dass höchste HEIßT bei 3 teilen  i0 = ^2
+- Ausgabe muss anpassbar sein je nach EIngabe von Stützpunkten (?)
+- UM EXPONENT VERÄNDERN ZU KÖNNEN i0 = Anzahl n aller i
+HEIßT i1 = ANZAHL i-1
+usw

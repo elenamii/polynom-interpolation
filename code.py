@@ -67,8 +67,12 @@ print(poly_mult(p,q)) # expect [5, 16, 27, 18]
 
 #Das Programm soll in der Lage sein die Lagrange-Polynome (-Basis) auszugeben.
 
-#Des Weiteren soll die Newton-Basis ausgegeben werden.
 
+
+
+#Des Weiteren soll die Newton-Basis ausgegeben werden.
+def newton(x,y):
+	n = len(y)
 #plt.show() zeigt Plots an falls wir die Polynome auslesen wollen / visualisieren wollen
 
 
