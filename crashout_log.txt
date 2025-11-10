@@ -1,0 +1,14 @@
+# das ist das crashout_log, jeder crashout der beim und durch das coden diese projekts entstanden ist, soll aus statistischen gründen heir festgehalten werden  
+
+kurzer reminder: we are in this together. 
+
+folgendes  pattern kann als vorlage für das crashout_log genutzt werden
+ 
+Legende: 
+CRASHOUT_SCALE: from 1-5, wobei 5 der maximale crashout 
+CRASHOUT_NR: number of crashout of the day (eg. 1 if its the first COD)
+
+---DATE---TIME---NAME---REASON OF CRASHOUT---CRASHOUT CONTENTS(whatever)---CRASHOUT_NR---CRASHOUT_SCALE
+
+
+10.11.25---23:44---EG---cant remember---stupid fucking everything---1---2
