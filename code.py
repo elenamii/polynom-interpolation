@@ -5,15 +5,15 @@ import matplotlib.pyplot as plt #Benötigt für Plotten von Graphen aber glaube 
 
 
 #stützstellen und -werte werden abgefragt und gespeichert 
-anzahl = int(input("Gewünschte ANZAHL Stützstellen eingeben: ")) #0 handeling fehlt
+anzahl = int(input("Gewünschte ANZAHL Stützstellen eingeben: ")) 
 x_wert = []
 y_wert = []
 
 print("Bitte geben Sie ihre gewünschten Stützstellen mit ihren Stützwerten an.")
 
 for i in range(anzahl):
-    x= float(input("x[i]: ")) # andere schreibweise für index !!
-    y= float(input("y(i): "))
+    x= float(input(f"x({i}): ")) 
+    y= float(input(f"y({i}): "))
     x_wert.append(x)
     y_wert.append(y)
 
