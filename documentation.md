@@ -71,3 +71,16 @@ p(x) * q(x) = 1*5 + 1*6x + 2x*5 + 2x*6x + 3x^2*5 + 3x^2*6x
 - UM EXPONENT VERÄNDERN ZU KÖNNEN i0 = Anzahl n aller i
 HEIßT i1 = ANZAHL i-1
 usw
+
+Weietre Hinweise: 
+Der Index vom Array ist identisch mit der Potenz von x
+        d.h. z. B. [1,2,3] => 1* x^0 + 2*x^1 + 3*x^2
+        wobei 1,2,3 die Koeff. und der Index: [i0,i1,i2] (wie @Paula schon erklärt hat)
+
+Des Weitern muss bei der Ausgabe auf folgendes geachtet werden: (details)
+        - Vorzeichen müssen beim ersten Koeff. nur angegeben werden wenn es ein minus ist 
+            => -2x + 3 , aber nicht +2x + 3
+        - Wenn der Koeffizeint 0 ist, sollte der Term nicht aufgelistet werden 
+            => 2x^3 + 4x + 2 , aber nicht 2x^3 + 0x^2+ 4x + 2
+        - Wenn es x^1 ist sollte es nur x in der Ausgabe sein, genau so sollte x^0, was 1 ergibt, nicht zusätzlich aufgelistet sein 
+            => 3x + 2 , aber nicht 3x^1 + 2x^0 
