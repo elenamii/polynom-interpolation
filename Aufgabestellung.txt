@@ -39,3 +39,9 @@ https://pythonnumericalmethods.studentorg.berkeley.edu/notebooks/chapter17.04-La
 
 HERMITE
 https://jordan-hay.github.io/jekyll/update/2023/10/30/hermite.html
+
+
+Links zu Dokus:
+https://numpy.org/doc/stable/reference/routines.polynomials.html —> link zu polynomial Methode innerhalb von numpy
+
+https://numpy.org/doc/stable/reference/routines.polynomials.polynomial.html
