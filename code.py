@@ -64,7 +64,7 @@ def poly_mult(p,q):
 print(poly_mult(p,q)) # expect [5, 16, 27, 18]
 
 
-# funktion zum multiplizieren von polynom mit zahl 
+# funktion zum multiplizieren von polynom mit zahl DOKU FEHLT 
 def poly_number_mult(p,number):
 	result = []
 	for coeff in p:
@@ -76,7 +76,7 @@ number = 2
 p = [2,4,6]
 print(f"das ergebnis ist: {poly_number_mult(p,number)}") #expect [2,8,12]
 
-#funktion zum dividieren von polynom und zahl 
+#funktion zum dividieren von polynom und zahl DOKU FEHLT
 def poly_number_div(p, number):
 	result= []
 	for coeff in p:
@@ -84,7 +84,7 @@ def poly_number_div(p, number):
 	return result 
 
 #test poly_number_div
-print(f"das ergebnis von der div ist: {poly_number_div(p,number)}") #expect [1,2,3]
+print(f"das ergebnis von der div ist: {poly_number_div(p,number)}") #expect [1,2,3] --> tatsächlich [1.0,2.0.3.0] evtl change??
 
 
 #Beide Polynombasenbitte in ausmultiplizierter Form (Normalform des Polynoms…)
