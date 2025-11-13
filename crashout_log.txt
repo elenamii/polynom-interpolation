@@ -14,3 +14,4 @@ CRASHOUT_NR: number of crashout of the day (eg. 1 if its the first COD)
 10.11.25---23:44---EG---cant remember---stupid fucking everything---1---2
 13.11.25---19:59---EG---fkn TypeError---junge warum bekomm ich die ganze zeit feheler wtf????---1---4
 13.11.25---20:32--EG---fehlercodes---warum kommen immern neue fehler?? kann es nicht einmal alle fahler sagen un nicht ständig neue savehn falsch markieren die davor funktionniert haben wtffffffffff---2---5
+13.11.25---20:36---EG---EIN KOMMA??---weil ein komma zu viel war??! ._.???!!!---3---5
