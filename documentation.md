@@ -107,3 +107,4 @@ p(x) * 2 = 1*2 + 2*2 + 3*2
 **BESONDERHEITEN:**
 - Jeder Koeffizient des Polynoms wird iteriert und mit der `number` multipliziert
 
+##to do: dokumentation für poly_number_mult, poly_number_div und lagrange hinzufügen 
