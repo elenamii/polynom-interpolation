@@ -84,3 +84,26 @@ Des Weitern muss bei der Ausgabe auf folgendes geachtet werden: (details)
             => 2x^3 + 4x + 2 , aber nicht 2x^3 + 0x^2+ 4x + 2
         - Wenn es x^1 ist sollte es nur x in der Ausgabe sein, genau so sollte x^0, was 1 ergibt, nicht zusätzlich aufgelistet sein 
             => 3x + 2 , aber nicht 3x^1 + 2x^0 
+
+
+## poly_number_mult Theorie 
+```text
+p = [1,2,3] --> 1*x^0 + 2*x^1 + 3*x^2
+number = 2
+
+p(x) * 2 = 1*2 + 2*2 + 3*2
+            = 2 + 4 + 6 
+            --> Array aus Koeffizienten: [2, 4, 6]
+```
+
+## poly_number_mult Funktion 
+**INPUT:**
+- `p`: Liste von Koeffizienten eines Polynoms
+- `number`: Zahl 
+
+**OUTPUT:**
+- Liste von Koeffizienten des Produktpolynoms
+
+**BESONDERHEITEN:**
+- Jeder Koeffizient des Polynoms wird iteriert und mit der `number` multipliziert
+
