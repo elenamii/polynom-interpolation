@@ -1,5 +1,5 @@
 import numpy as np #Benötigt für numerische BErsechnungen
-import matplotlib.pyplot as plt #Benötigt für Plotten von Graphen aber glaube das brauchen wir nicht
+# import matplotlib.pyplot as plt #Benötigt für Plotten von Graphen aber glaube das brauchen wir nicht
 
 #plt.style.use('seaborn-poster')
 
@@ -62,6 +62,20 @@ def poly_mult(p,q):
 
 # test poly_mult mit bsp-polynomen 
 print(poly_mult(p,q)) # expect [5, 16, 27, 18]
+
+
+# funktion zum multiplizieren von polynom mit zahl 
+def poly_number_mult(p,number):
+	result = []
+	for coeff in p:
+		result.append(coeff * number) #jeden koeff multiplizieren
+	return result 
+
+# test poly_number_mult 
+number = 2
+p = [1,2,3]
+print(f"das ergebnis ist: {poly_number_mult(p,number)}") #expect [2,4,6]
+
 
  #Beide Polynombasenbitte in ausmultiplizierter Form (Normalform des Polynoms…)
 
