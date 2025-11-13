@@ -73,11 +73,21 @@ def poly_number_mult(p,number):
 
 # test poly_number_mult 
 number = 2
-p = [1,2,3]
-print(f"das ergebnis ist: {poly_number_mult(p,number)}") #expect [2,4,6]
+p = [2,4,6]
+print(f"das ergebnis ist: {poly_number_mult(p,number)}") #expect [2,8,12]
+
+#funktion zum dividieren von polynom und zahl 
+def poly_number_div(p, number):
+	result= []
+	for coeff in p:
+		result.append(coeff/number)
+	return result 
+
+#test poly_number_div
+print(f"das ergebnis von der div ist: {poly_number_div(p,number)}") #expect [1,2,3]
 
 
- #Beide Polynombasenbitte in ausmultiplizierter Form (Normalform des Polynoms…)
+#Beide Polynombasenbitte in ausmultiplizierter Form (Normalform des Polynoms…)
 
 #Das Programm soll in der Lage sein die Lagrange-Polynome (-Basis) auszugeben.
 
