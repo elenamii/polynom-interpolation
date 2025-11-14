@@ -1,4 +1,4 @@
-import numpy as np #Benötigt für numerische BErsechnungen
+#import numpy as np #Benötigt für numerische BErsechnungen
 # import matplotlib.pyplot as plt #Benötigt für Plotten von Graphen aber glaube das brauchen wir nicht
 
 #plt.style.use('seaborn-poster')
