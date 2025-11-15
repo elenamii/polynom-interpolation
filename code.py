@@ -1,4 +1,4 @@
-import numpy as np #Benötigt für numerische Berechnungen
+#import numpy as np #Benötigt für numerische Berechnungen
 # import matplotlib.pyplot as plt #Benötigt für Plotten von Graphen aber glaube das brauchen wir nicht
 
 #plt.style.use('seaborn-poster')
@@ -12,12 +12,64 @@ class Polynom:
 	def __repr__(self): #programmer readable string representation
 		"""Methode um string represantion eines Polynoms zurückzugeben"""
 		return "Polynom" + str(tuple(self.coeffiecients)) # returned nen string vom tuple? glaub ich
+	
+	"""#jetzt noch mit LAtex damit actually lesbar sit ??
+	def __str__(self):
+		def x_expr(degree):
+			if degree == 0:
+				res = ""
+			elif degree == 1: #wenn erste not true try this one
+				res = "x" 
+			else:
+				res = "x^"+str(degree)
+				return res
+			degree = len(self.coeffiecients) - 1 # returns number of items in object
+			res = " "
+			for i in range (0, degree+1):
+				coeff = self.coeffiecients [i]
+				#nixhts passiert / muss gemacht werden wenn coeff = 0:
+				if abs(coeff) == 1 and i <degree:
+					# 1 in front of x  sollte nicht passieren , also x instead of 1x
+					# für +-:
+					res += f"{coeff:+g}{x_expr(degree-i)}"
+			return res.lstrip('+') # + am anfange kommt weg"""
+
+def __str__(self):
+	"""Geben as Polynom als formatierter String aus"""
+	degree = len(self. coeffiecients) -1
+	res = ""
+
+	for i in range(degree +1 ):
+		coeff= self.coeffiecnients [i]
+		current_degree = degree -i
+
+		#Überspringen Koeffizient wenn 0
+		if coeff == 0:
+			continue
+		#Term aufbauen
+		if current_degree == 0:
+			res += f"{coeff:+g}x"
+		elif current_degree == 1:
+			if abs(coeff) == 1:
+				res +=f"{'+'if coeff > 0 else '-'}x"
+			else:
+				res += f"{coeff:+g}x"
+		else:
+			if abs(coeff) == 1:
+				res+= f"{'+'if coeff > 0 else '-'}x^{current_degree}"
+	return res.lstrip('+') if res else "0"
+
+
 
 # test Klasse Polynom
-p = Polynom (1, 0, -4, 3 , 0)
-print(p)
-p2 = eval(repr(p)) #evaluiert ob nachfolgende Funktion ne valid Python expression ist
-print(p2)		
+polys = [Polynom(1, 0, -4, 3, 0),
+         Polynom(2, 0),
+         Polynom(4, 1, -1),
+         Polynom(3, 0, -5, 2, 7),
+         Polynom(-42)]
+
+for count, poly in enumerate(polys):
+    print(f"$p_{count} = {str(poly)}$")
 
 #ausgabe polyschreibweise
 print(f"in polynomschreibweise: {Polynom}")

@@ -16,3 +16,4 @@ CRASHOUT_NR: number of crashout of the day (eg. 1 if its the first COD)
 13.11.25---20:32--EG---fehlercodes---warum kommen immern neue fehler?? kann es nicht einmal alle fahler sagen un nicht ständig neue savehn falsch markieren die davor funktionniert haben wtffffffffff---2---5
 13.11.25---20:36---EG---EIN KOMMA??---weil ein komma zu viel war??! ._.???!!!---3---5
 15.11.25---14:53---PK---DIGGAAA---ES GIBT IN PYTHON KEINE ARRAYS SONDERN NUR LISTEN ICHGUISADHKGHS---1---2
+15.11.25---16:10---PK---EINRÜCKEN---WARUM FUNKTIONIERT DIE SCHEI?E NICHT ÒHNE DASS MAN JEDE KACKE EINRÜCKEN MUSS BENUTZT DOCH EINFACH KLAMMERN IHR AFFEN---2---4
