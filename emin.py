@@ -1,62 +1,69 @@
-print(input("Gebe etwas ein: "))
+import os
+clear = lambda: os.system('cls')
+clear()
 
-def avg(x_array):
-    return (sum(x_array) / len(x_array))
+#Aufgabe: Eine Funktion die Ableitungen von Polynomen berechnet.
 
-x_array = input("Gebe mehrere Zahlen durch Komma getrennt ein: ").split(",")
-x_array = [int(x) for x in x_array]
-print(x_array)
-print(x_array[0])
+class MathWithPolynomials:
 
-print("Durchschnitt:", avg(x_array))
+    def poly_dervitive(coeffs):
 
-# for x in range(1000):
-    # print(x)
+        grad = len(coeffs) #höhste potenz von polynom
+        result_coeffs = [] #leeres arry für ergebnis
 
-class Auto:
-    def __init__(self, marke, baujahr):
-        self.marke = marke
-        self.baujahr = baujahr
-        self.kilometerstand = 0
-        self.tankinhalt = 0
-        self.verbrauch = 7.5  # Liter pro 100 km
+        for i in range(1, grad, +1): #für itteration aber dekrementierend
+            result_coeffs.append(coeffs[i] * i)#den coeff mal den index [potenz] ergbit neuen coeff
 
-    def starten(self):
-        print(f"Das Auto der Marke {self.marke} aus dem Jahr {self.baujahr} startet.")
+        return result_coeffs
 
-    def stoppen(self):
-        print(f"Das Auto der Marke {self.marke} aus dem Jahr {self.baujahr} stoppt.")
-    
-    def fahren(self, kilometer):
-        benoetigter_treibstoff = (self.verbrauch / 100) * kilometer
-        if benoetigter_treibstoff <= self.tankinhalt:
-            self.kilometerstand += kilometer
-            self.tankinhalt -= benoetigter_treibstoff
-            print(f"Das Auto ist {kilometer} km gefahren.")
+    #UNITTESTS :)
+
+    def unit_tests(p, expected): 
+        result = MathWithPolynomials.poly_dervitive(p)#GUYS WIESO IST HEIR DER KLASSENNAME NOCHMAL NÖTIG???
+        if result == expected:#vergleich für console output
+            print(f"Test Passed: {result} == {expected}")
         else:
-            print(f"Nicht genug Treibstoff zum Fahren. Sie müssen {benoetigter_treibstoff - self.tankinhalt:.2f} Liter mehr tanken.")
+            print(f"Test Failed: {result} != {expected}")
 
-    def tanken(self, liter):
-        self.tankinhalt += liter
-        print(f"Das Auto wurde mit {liter} Litern getankt.")
+    #Mathematische Schriebeweise
+    def print_poly(coeffs):
+        result = [] #leeres string array 
+        for grad, coeff in enumerate(coeffs): #itteriere durch coeffs mit index als power
+            if coeff != 0:#nur nicht null coeffs
+                result.append(f"{coeff}x^{grad}" if grad > 0 else f"{coeff}")#füge es hinzu
+        polynomial = " + ".join(result)
+        print(polynomial if polynomial else "0")
 
-    def status_anzeigen(self):
-        print(f"Marke: {self.marke}, Baujahr: {self.baujahr}, Kilometerstand: {self.kilometerstand} km, Tankinhalt: {self.tankinhalt} L")
+# TEST 1 
+polynom = [1, 2, 3]  # 1 + 2x + 3x^2 => [1, 2, 3]
+expected = [2, 6]  # 2 + 6x => [2, 6]
+MathWithPolynomials.unit_tests(polynom, expected)
 
-neuesAuto = Auto("BMW", 1995)
-neuesAuto.starten()
-neuesAuto.tanken(900)
-neuesAuto.fahren(10000)
-neuesAuto.status_anzeigen()
+# TEST 2
+polynom = [0, 0, 5, 0, 1] # 0 + 0x + 5x^2 + 0x^3 + 1x^4 => [0, 0, 5, 0, 1]
+expected = [0, 10, 0, 4] # 10x + 0x^2 + 4x^3 => [0, 10, 0, 4]
+MathWithPolynomials.unit_tests(polynom, expected)
 
-def fakultaet(n):
-    if n < 0:
-        return "Ungültige Eingabe"
-    elif n == 0:
-        return 1
-    else:
-        return n * fakultaet(n - 1)
-    
-# print("Fakultät von 5:", fakultaet(1))
-# for i in range(-5, 5):
-    # print(f'Fakultät von {i}:', fakultaet(i))
+# TEST 3
+polynom = [7]  # 7 => [7]
+expected = []  # 0 => []
+MathWithPolynomials.unit_tests(polynom, expected)
+
+# TEST 4
+polynom = [3, -4, 0, 2]  # 3 - 4x + 0x^2 + 2x^3 => [3, -4, 0, 2]
+expected = [-4, 0, 6]  # -4 + 0x + 6x^2 => [-4, 0, 6]
+MathWithPolynomials.unit_tests(polynom, expected)
+
+# TEST 5
+polynom = [0.5, 1.5, -2.5]  # 0.5 + 1.5x - 2.5x^2 => [0.5, 1.5, -2.5]
+expected = [1.5, -5.0]  # 1.5 - 5.0x => [1.5, -5.0]
+MathWithPolynomials.unit_tests(polynom, expected)
+
+# Beispielausgabe der Polynome
+print("\nBeispielausgabe der Polynome:")
+example_poly = [1, 0, -3, 4]  # 1 - 3x^2 + 4x^3
+print("Originalpolynom:")
+MathWithPolynomials.print_poly(example_poly)
+derivative_poly = MathWithPolynomials.poly_dervitive(example_poly)
+print("Ableitung des Polynoms:")
+MathWithPolynomials.print_poly(derivative_poly)

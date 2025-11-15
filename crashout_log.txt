@@ -17,3 +17,5 @@ CRASHOUT_NR: number of crashout of the day (eg. 1 if its the first COD)
 13.11.25---20:36---EG---EIN KOMMA??---weil ein komma zu viel war??! ._.???!!!---3---5
 15.11.25---14:53---PK---DIGGAAA---ES GIBT IN PYTHON KEINE ARRAYS SONDERN NUR LISTEN ICHGUISADHKGHS---1---2
 15.11.25---16:10---PK---EINRÜCKEN---WARUM FUNKTIONIERT DIE SCHEI?E NICHT ÒHNE DASS MAN JEDE KACKE EINRÜCKEN MUSS BENUTZT DOCH EINFACH KLAMMERN IHR AFFEN---2---4
+15.11.25---21:23---ES---ICH FICK DOCH PHYTON --- WO WAS MACHE ICH PLUS ODER MINUS!!! WO IST DIE SCHEIß STRUKTUR?! MACH ICH JETZT i-- ODER NICHT!!! WAS ZUM FICK IST BITTE IN RANGE()!!! NÖÖÖ --- 1 --- 4
+15.11.25---21:23---ES---KLASSEN---Wie bitte mach ich static, private, public. Ich fühle mich als würde ich das erst mal was von Klassen hören. --- 2 --- 2
