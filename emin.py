@@ -17,22 +17,26 @@ class MathWithPolynomials:
         return result_coeffs
 
     #UNITTESTS :)
-
     def unit_tests(p, expected): 
-        result = MathWithPolynomials.poly_dervitive(p)#GUYS WIESO IST HEIR DER KLASSENNAME NOCHMAL NÖTIG???
+        result = MathWithPolynomials.poly_dervitive(p)#GUYS WIESO IST HEIR DER KLASSENNAME NOCHMAL NÖTIG??? Python is fucked up
         if result == expected:#vergleich für console output
-            print(f"Test Passed: {result} == {expected}")
+            print(f"Test Passed: {MathWithPolynomials.print_poly(result)} == {MathWithPolynomials.print_poly(expected)}")
         else:
-            print(f"Test Failed: {result} != {expected}")
+            print(f"Test Failed: {MathWithPolynomials.print_poly(result)} != {MathWithPolynomials.print_poly(expected)}")
 
     #Mathematische Schriebeweise
     def print_poly(coeffs):
+        if coeffs == []:
+            return "0" #damit auch bei leerem array 0 output ist. weil for sind nicht läuft
         result = [] #leeres string array 
         for grad, coeff in enumerate(coeffs): #itteriere durch coeffs mit index als power
             if coeff != 0:#nur nicht null coeffs
-                result.append(f"{coeff}x^{grad}" if grad > 0 else f"{coeff}")#füge es hinzu
+                result.insert(0, f"{coeff}x^{grad}" if grad > 0 else f"{coeff}")#füge es hinzu
         polynomial = " + ".join(result)
-        print(polynomial if polynomial else "0")
+        return polynomial
+
+
+print("UNITTESTS")
 
 # TEST 1 
 polynom = [1, 2, 3]  # 1 + 2x + 3x^2 => [1, 2, 3]
@@ -59,11 +63,5 @@ polynom = [0.5, 1.5, -2.5]  # 0.5 + 1.5x - 2.5x^2 => [0.5, 1.5, -2.5]
 expected = [1.5, -5.0]  # 1.5 - 5.0x => [1.5, -5.0]
 MathWithPolynomials.unit_tests(polynom, expected)
 
-# Beispielausgabe der Polynome
-print("\nBeispielausgabe der Polynome:")
-example_poly = [1, 0, -3, 4]  # 1 - 3x^2 + 4x^3
-print("Originalpolynom:")
-MathWithPolynomials.print_poly(example_poly)
-derivative_poly = MathWithPolynomials.poly_dervitive(example_poly)
-print("Ableitung des Polynoms:")
-MathWithPolynomials.print_poly(derivative_poly)
+
+print("END UNITTESTS")
