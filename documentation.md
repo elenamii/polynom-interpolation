@@ -60,6 +60,7 @@ p(x) * q(x) = 1*5 + 1*6x + 2x*5 + 2x*6x + 3x^2*5 + 3x^2*6x
 - Produkte werden aufaddiert, falls mehrere Terme die gleiche Potenz haben: `result[position] += p[i] * q[j]`
 
 **POLYNOM SCHREIBWEISE**
+ACHTUNG PYTHON HAT KEINE ARRAYS SONDERN LISTEN
 - das ausgegebene Array muss umgewandelt werden in feste INTEGER -> dann löst sich auch das Problem von negativen Zahlen (funktioniert das mit INT (eig ja))
 - je nach Länge des Arrays muss umgekehrt ausgegeben werden
 - [i0,i1,i2] usw

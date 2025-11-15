@@ -1,8 +1,26 @@
-#import numpy as np #Benötigt für numerische BErsechnungen
+import numpy as np #Benötigt für numerische Berechnungen
 # import matplotlib.pyplot as plt #Benötigt für Plotten von Graphen aber glaube das brauchen wir nicht
 
 #plt.style.use('seaborn-poster')
 
+# KLASSE FÜR POLYNOM SCHREIBWEISE (notation)
+class Polynom:
+	def __init__(self, *coeffcients ): # * sammelt variable Anzahl von Argumenten in Tupel
+		" " "input: Koeffizienten sind in der Form a_n, ... a_l, a_0"" "
+		self.coeffiecients = list(coeffcients) #tuple wird in liste gemacht
+		 
+	def __repr__(self): #programmer readable string representation
+		"""Methode um string represantion eines Polynoms zurückzugeben"""
+		return "Polynom" + str(tuple(self.coeffiecients)) # returned nen string vom tuple? glaub ich
+
+# test Klasse Polynom
+p = Polynom (1, 0, -4, 3 , 0)
+print(p)
+p2 = eval(repr(p)) #evaluiert ob nachfolgende Funktion ne valid Python expression ist
+print(p2)		
+
+#ausgabe polyschreibweise
+print(f"in polynomschreibweise: {Polynom}")
 
 #stützstellen und -werte werden abgefragt und gespeichert 
 anzahl = int(input("Gewünschte ANZAHL Stützstellen eingeben: ")) 
