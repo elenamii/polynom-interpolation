@@ -129,7 +129,7 @@ polynom = [1, 2, 3] -> 1 + 2x + 3x^2
 ableitung = MathWithPolynomials.poly_dervitive(polynom)
 print(ableitung) -> Ausgabe: [2, 6]
 
-# print_poly
+## print_poly
 
 import MathWithPolynomials
 
