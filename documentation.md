@@ -123,11 +123,11 @@ p(x) * 2 = 1*2 + 2*2 + 3*2
 import MathWithPolynomials
 
 **INPUT**
-polynom = [1, 2, 3] # 1 + 2x + 3x^2
+polynom = [1, 2, 3] -> 1 + 2x + 3x^2
 
 **OUTPUT**
 ableitung = MathWithPolynomials.poly_dervitive(polynom)
-print(ableitung) # Ausgabe: [2, 6]
+print(ableitung) -> Ausgabe: [2, 6]
 
 # print_poly
 
