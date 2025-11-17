@@ -143,7 +143,7 @@ MathWithPolynomials.print_poly(polynom) => 3x^2 + 2x + 1
 
 
 **POLYNOM CLASS**
-Doku Fehlt
+also basically wird das polynom in nen string umgeformt -> und gibt es dann nacheinander als formatierten String wieder mit x, solange bis alle abgeschlossen sind
 
 
 
