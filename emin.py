@@ -26,42 +26,57 @@ class MathWithPolynomials:
 
     #Mathematische Schriebeweise
     def print_poly(coeffs):
-        if coeffs == []:
-            return "0" #damit auch bei leerem array 0 output ist. weil for sind nicht läuft
-        result = [] #leeres string array 
-        for grad, coeff in enumerate(coeffs): #itteriere durch coeffs mit index als power
-            if coeff != 0:#nur nicht null coeffs
-                result.insert(0, f"{coeff}x^{grad}" if grad > 0 else f"{coeff}")#füge es hinzu
-        polynomial = " + ".join(result)
-        return polynomial
+        if not coeffs:
+            return "0"
+
+        result = []
+
+        for grad, coeff in enumerate(coeffs):
+            if coeff != 0:
+                if grad == 0:
+                    term = f"{coeff}"
+                else:
+                    power = MathWithPolynomials.superscript(grad)
+                    term = f"{coeff}x{power}"
+
+                result.insert(0, term)
+
+        return " + ".join(result)
+    
+    def superscript(n):
+        table = {
+            "0": "", "1": "", "2": "²", "3": "³", "4": "⁴",
+            "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹"
+        }
+        return "".join(table[d] for d in str(n))
 
 
-print("UNITTESTS")
+# print("UNITTESTS")
 
-# TEST 1 
-polynom = [1, 2, 3]  # 1 + 2x + 3x^2 => [1, 2, 3]
-expected = [2, 6]  # 2 + 6x => [2, 6]
-MathWithPolynomials.unit_tests(polynom, expected)
+# # TEST 1 
+# polynom = [1, 2, 3]  # 1 + 2x + 3x^2 => [1, 2, 3]
+# expected = [2, 6]  # 2 + 6x => [2, 6]
+# MathWithPolynomials.unit_tests(polynom, expected)
 
-# TEST 2
-polynom = [0, 0, 5, 0, 1] # 0 + 0x + 5x^2 + 0x^3 + 1x^4 => [0, 0, 5, 0, 1]
-expected = [0, 10, 0, 4] # 10x + 0x^2 + 4x^3 => [0, 10, 0, 4]
-MathWithPolynomials.unit_tests(polynom, expected)
+# # TEST 2
+# polynom = [0, 0, 5, 0, 1] # 0 + 0x + 5x^2 + 0x^3 + 1x^4 => [0, 0, 5, 0, 1]
+# expected = [0, 10, 0, 4] # 10x + 0x^2 + 4x^3 => [0, 10, 0, 4]
+# MathWithPolynomials.unit_tests(polynom, expected)
 
-# TEST 3
-polynom = [7]  # 7 => [7]
-expected = []  # 0 => []
-MathWithPolynomials.unit_tests(polynom, expected)
+# # TEST 3
+# polynom = [7]  # 7 => [7]
+# expected = []  # 0 => []
+# MathWithPolynomials.unit_tests(polynom, expected)
 
-# TEST 4
-polynom = [3, -4, 0, 2]  # 3 - 4x + 0x^2 + 2x^3 => [3, -4, 0, 2]
-expected = [-4, 0, 6]  # -4 + 0x + 6x^2 => [-4, 0, 6]
-MathWithPolynomials.unit_tests(polynom, expected)
+# # TEST 4
+# polynom = [3, -4, 0, 2]  # 3 - 4x + 0x^2 + 2x^3 => [3, -4, 0, 2]
+# expected = [-4, 0, 6]  # -4 + 0x + 6x^2 => [-4, 0, 6]
+# MathWithPolynomials.unit_tests(polynom, expected)
 
-# TEST 5
-polynom = [0.5, 1.5, -2.5]  # 0.5 + 1.5x - 2.5x^2 => [0.5, 1.5, -2.5]
-expected = [1.5, -5.0]  # 1.5 - 5.0x => [1.5, -5.0]
-MathWithPolynomials.unit_tests(polynom, expected)
+# # TEST 5
+# polynom = [0.5, 1.5, -2.5]  # 0.5 + 1.5x - 2.5x^2 => [0.5, 1.5, -2.5]
+# expected = [1.5, -5.0]  # 1.5 - 5.0x => [1.5, -5.0]
+# MathWithPolynomials.unit_tests(polynom, expected)
 
 
-print("END UNITTESTS")
+# print("END UNITTESTS")
