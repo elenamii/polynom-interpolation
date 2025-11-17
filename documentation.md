@@ -145,3 +145,10 @@ MathWithPolynomials.print_poly(polynom) => 3x^2 + 2x + 1
 **POLYNOM CLASS**
 Doku Fehlt
 
+
+
+**UI**
+Array angeben
+Row hinzufügen usw
+Compiler
+-> nicht nach Methode lösen, sondern alle Methoden und dann ne allgemeine Ausgabe
