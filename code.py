@@ -4,67 +4,47 @@
 #plt.style.use('seaborn-poster')
 
 # KLASSE FÜR POLYNOM SCHREIBWEISE (notation)
+
 class Polynom:
-	def __init__(self, *coeffcients ): # * sammelt variable Anzahl von Argumenten in Tupel
-		" " "input: Koeffizienten sind in der Form a_n, ... a_l, a_0"" "
-		self.coeffiecients = list(coeffcients) #tuple wird in liste gemacht
-		 
-	def __repr__(self): #programmer readable string representation
-		"""Methode um string represantion eines Polynoms zurückzugeben"""
-		return "Polynom" + str(tuple(self.coeffiecients)) # returned nen string vom tuple? glaub ich
-	
-	"""#jetzt noch mit LAtex damit actually lesbar sit ??
-	def __str__(self):
-		def x_expr(degree):
-			if degree == 0:
-				res = ""
-			elif degree == 1: #wenn erste not true try this one
-				res = "x" 
-			else:
-				res = "x^"+str(degree)
-				return res
-			degree = len(self.coeffiecients) - 1 # returns number of items in object
-			res = " "
-			for i in range (0, degree+1):
-				coeff = self.coeffiecients [i]
-				#nixhts passiert / muss gemacht werden wenn coeff = 0:
-				if abs(coeff) == 1 and i <degree:
-					# 1 in front of x  sollte nicht passieren , also x instead of 1x
-					# für +-:
-					res += f"{coeff:+g}{x_expr(degree-i)}"
-			return res.lstrip('+') # + am anfange kommt weg"""
+    def __init__(self, *coeffcients):
+        """input: Koeffizienten in der Form a_n, ..., a_0"""
+        self.coeffiecients = list(coeffcients)
 
-def __str__(self):
-	"""Geben as Polynom als formatierter String aus"""
-	degree = len(self. coeffiecients) -1
-	res = ""
+    def __repr__(self):
+        return "Polynom" + str(tuple(self.coeffiecients))
 
-	for i in range(degree +1 ):
-		coeff= self.coeffiecnients [i]
-		current_degree = degree -i
-
-		#Überspringen Koeffizient wenn 0
-		if coeff == 0:
-			continue
-		#Term aufbauen
-		if current_degree == 0:
-			res += f"{coeff:+g}x"
-		elif current_degree == 1:
-			if abs(coeff) == 1:
-				res +=f"{'+'if coeff > 0 else '-'}x"
-			else:
-				res += f"{coeff:+g}x"
-		else:
-			if abs(coeff) == 1:
-				res+= f"{'+'if coeff > 0 else '-'}x^{current_degree}"
-	return res.lstrip('+') if res else "0"
-
-
+    def __str__(self):
+        """Gibt das Polynom als formatierten String zurück, z.B. -2x^2 + x + 3"""
+        coeffs = self.coeffiecients
+        if not coeffs:
+            return "0"
+        degree = len(coeffs) - 1
+        parts = []
+        for i, coeff in enumerate(coeffs):
+            if coeff == 0:
+                continue
+            current_degree = degree - i
+            sign = '+' if coeff > 0 else '-'
+            a = abs(coeff)
+            if current_degree == 0:
+                term = f"{a:g}"
+            elif current_degree == 1:
+                term = "x" if a == 1 else f"{a:g}x"
+            else:
+                term = f"x^{current_degree}" if a == 1 else f"{a:g}x^{current_degree}"
+            parts.append((sign, term))
+        if not parts:
+            return "0"
+        first_sign, first_term = parts[0]
+        s = ('' if first_sign == '+' else '-') + first_term
+        for sign, term in parts[1:]:
+            s += f" {sign} {term}"
+        return s
 
 # test Klasse Polynom
 polys = [Polynom(1, 0, -4, 3, 0),
          Polynom(2, 0),
-         Polynom(4, 1, -1),
+         Polynom(4, 1, -1), 
          Polynom(3, 0, -5, 2, 7),
          Polynom(-42)]
 
