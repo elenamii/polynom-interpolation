@@ -90,6 +90,8 @@ Des Weitern muss bei der Ausgabe auf folgendes geachtet werden: (details) - Vorz
 => 2x^3 + 4x + 2 , aber nicht 2x^3 + 0x^2+ 4x + 2 - Wenn es x^1 ist sollte es nur x in der Ausgabe sein, genau so sollte x^0, was 1 ergibt, nicht zusätzlich aufgelistet sein
 => 3x + 2 , aber nicht 3x^1 + 2x^0
 
+**DOKU FÜR CODE FEHLT**
+
 ## poly_number_mult Theorie
 
 ```text
@@ -138,3 +140,8 @@ polynom = [1, 2, 3] # 1 + 2x + 3x^2
 
 **OUTPUT**
 MathWithPolynomials.print_poly(polynom) => 3x^2 + 2x + 1
+
+
+**POLYNOM CLASS**
+Doku Fehlt
+
