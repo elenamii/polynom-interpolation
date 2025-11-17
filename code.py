@@ -54,6 +54,43 @@ for count, poly in enumerate(polys):
 #ausgabe polyschreibweise
 print(f"in polynomschreibweise: {Polynom}")
 
+"""**POLYNOM SCHREIBWEISE**
+ACHTUNG PYTHON HAT KEINE ARRAYS SONDERN LISTEN
+
+- das ausgegebene Array muss umgewandelt werden in feste INTEGER -> dann löst sich auch das Problem von negativen Zahlen (funktioniert das mit INT (eig ja))
+- je nach Länge des Arrays muss umgekehrt ausgegeben werden
+- [i0,i1,i2] usw
+- = [1,2,3]
+- 1x^0 + 2x^1 (=2x) + 3x^2 usw
+- > Ausgabe Polynomschreibweise
+- Ausgabe muss umgekehrt werden, i0 kann nicht ^0 sein, weil bei Polynomschreibweise ist das erste dementsprechend, dass höchste HEIßT bei 3 teilen i0 = ^2
+- Ausgabe muss anpassbar sein je nach EIngabe von Stützpunkten (?)
+- UM EXPONENT VERÄNDERN ZU KÖNNEN i0 = Anzahl n aller i
+  HEIßT i1 = ANZAHL i-1
+  usw
+
+Weietre Hinweise:
+Der Index vom Array ist identisch mit der Potenz von x
+d.h. z. B. [1,2,3] => 1* x^0 + 2*x^1 + 3\*x^2
+wobei 1,2,3 die Koeff. und der Index: [i0,i1,i2] (wie @Paula schon erklärt hat)
+
+Des Weitern muss bei der Ausgabe auf folgendes geachtet werden: (details) - Vorzeichen müssen beim ersten Koeff. nur angegeben werden wenn es ein minus ist
+=> -2x + 3 , aber nicht +2x + 3 - Wenn der Koeffizeint 0 ist, sollte der Term nicht aufgelistet werden
+=> 2x^3 + 4x + 2 , aber nicht 2x^3 + 0x^2+ 4x + 2 - Wenn es x^1 ist sollte es nur x in der Ausgabe sein, genau so sollte x^0, was 1 ergibt, nicht zusätzlich aufgelistet sein
+=> 3x + 2 , aber nicht 3x^1 + 2x^0"""
+
+def poly_to_list(poly_list):
+	"""Wandelt Polynom in Liste um"""
+	result = []
+	for coeff in poly_list:
+		result.append(coeff)
+	return result
+
+def list_to_poly(coeff_list):
+	"""Wandelt Liste in Polynom um"""
+	return Polynom(*coeff_list)
+
+
 #stützstellen und -werte werden abgefragt und gespeichert 
 anzahl = int(input("Gewünschte ANZAHL Stützstellen eingeben: ")) 
 x_wert = []
