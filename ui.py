@@ -42,15 +42,15 @@ label2.place(x=10, y=180, width=breite, height=50)
 entry = ui.Entry(window, font=("Arial", 16))
 entry.place(x=10, y=230, width=breite, height=50)
 
-btn = ui.Button(window, text="Berechnen", command=click2)
+btn = ui.Button(window, text="Berechnen", command=click)
 btn.place(x=10, y=290, width=breite, height=50)
 
 #3.
 label3 = ui.Label(window, text="3. Ergebnis")
-label3.place(x=10, y=180, width=breite, height=50)
+label3.place(x=10, y=340, width=breite, height=50)
 
 ergebnis = ui.Label(window)
-ergebnis.place(x=10, y=340, width=breite, height=50)
+ergebnis.place(x=10, y=390, width=breite, height=50)
 
 
 

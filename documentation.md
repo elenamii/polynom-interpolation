@@ -122,26 +122,24 @@ p(x) * 2 = 1*2 + 2*2 + 3*2
 
 ## poly_dervitive
 
-import MathWithPolynomials
+import emin
 
 **INPUT**
 polynom = [1, 2, 3] -> 1 + 2x + 3x^2
 
 **OUTPUT**
-ableitung = MathWithPolynomials.poly_dervitive(polynom)
+ableitung = emin.MathWithPolynomials.poly_dervitive(polynom)
 print(ableitung) -> Ausgabe: [2, 6]
 
 ## print_poly
 
-import MathWithPolynomials
+import emin
 
 **INPUT**
 polynom = [1, 2, 3] # 1 + 2x + 3x^2
 
 **OUTPUT**
-MathWithPolynomials.print_poly(polynom) => 3x^2 + 2x + 1
-
+emin.MathWithPolynomials.print_poly(polynom) => 3x^2 + 2x + 1
 
 **POLYNOM CLASS**
 Doku Fehlt
-

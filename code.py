@@ -49,7 +49,7 @@ polys = [Polynom(1, 0, -4, 3, 0),
          Polynom(-42)]
 
 for count, poly in enumerate(polys):
-    print(f"$p_{count} = {str(poly)}$")
+    print(f"$p_{count} = {str(poly)}")
 
 #ausgabe polyschreibweise
 print(f"in polynomschreibweise: {Polynom}")
@@ -71,7 +71,7 @@ ACHTUNG PYTHON HAT KEINE ARRAYS SONDERN LISTEN
 
 Weietre Hinweise:
 Der Index vom Array ist identisch mit der Potenz von x
-d.h. z. B. [1,2,3] => 1* x^0 + 2*x^1 + 3\*x^2
+d.h. z. B. [1,2,3] => 1* x^0 + 2*x^1 + 3x^2
 wobei 1,2,3 die Koeff. und der Index: [i0,i1,i2] (wie @Paula schon erklärt hat)
 
 Des Weitern muss bei der Ausgabe auf folgendes geachtet werden: (details) - Vorzeichen müssen beim ersten Koeff. nur angegeben werden wenn es ein minus ist
