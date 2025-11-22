@@ -142,4 +142,10 @@ polynom = [1, 2, 3] # 1 + 2x + 3x^2
 emin.MathWithPolynomials.print_poly(polynom) => 3x^2 + 2x + 1
 
 **POLYNOM CLASS**
-Doku Fehlt
+also basically wird das polynom in nen string umgeformt -> und gibt es dann nacheinander als formatierten String wieder mit x, solange bis alle abgeschlossen sind
+
+**UI**
+Array angeben
+Row hinzufügen usw
+Compiler
+-> nicht nach Methode lösen, sondern alle Methoden und dann ne allgemeine Ausgabe
