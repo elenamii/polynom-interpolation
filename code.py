@@ -1,4 +1,4 @@
-#import numpy as np #Benötigt für numerische Berechnungen
+import numpy as np #Benötigt für numerische Berechnungen
 # import matplotlib.pyplot as plt #Benötigt für Plotten von Graphen aber glaube das brauchen wir nicht
 
 #plt.style.use('seaborn-poster')
@@ -232,3 +232,15 @@ def newton(x,y):
 	n = len(y)
 #plt.show() zeigt Plots an falls wir die Polynome auslesen wollen / visualisieren wollen
 
+def div_diff(x_wert, y_wert): #https://www.uni-muenster.de/AMM/Veranstaltungen/SS19/NumAna/PythonNotebooks/Interpolation/Polynominterpolation.pdf
+	n=len(x_wert)-1
+	A=np.zeros([n+1,n+1])
+	for j in range(0,n+1):
+		for i in range(0,n+1-j):
+			if (j==0):
+				A[i,i]=y[i]
+			else:
+				k=i+j
+				A[i,k]=1/(x_wert[i]-x_wert[k])*(A[i,k-1]-A[i+1,k])
+		return A
+	
