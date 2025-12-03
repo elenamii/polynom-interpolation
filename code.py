@@ -213,13 +213,6 @@ lagrange(x_wert,y_wert)
 
 
 
-
-
-
-
-
-
-
 #Beide Polynombasenbitte in ausmultiplizierter Form (Normalform des Polynoms…)
 
 #Das Programm soll in der Lage sein die Lagrange-Polynome (-Basis) auszugeben.
