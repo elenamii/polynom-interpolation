@@ -1,3 +1,4 @@
+# hermite.py
 from polynom import Polynom
 
 def factorial(n):
@@ -6,43 +7,49 @@ def factorial(n):
     return n * factorial(n - 1)
 
 def hermite_interpolation(x_wert, y_wert):
+    """
+    Berechnet das Hermite-Interpolationspolynom H(x) in ausmultiplizierter Form.
+    
+    x_wert: Liste der Stützstellen [x0, x1, ...]
+    y_wert: Liste von Listen [[y0], [y1, y1'], [y2, y2', y2''], ...]
+    """
     n = sum(len(y) for y in y_wert)
-    z = []
-    Q = []
+    z = []  # erweiterte Stützstellen
+    Q = []  # Dividierte Differenzen
 
+    # Wiederholte Stützstellen vorbereiten
     for xi, yi_list in zip(x_wert, y_wert):
         m = len(yi_list)
-        for k in range(m):
+        for _ in range(m):
             z.append(xi)
-        for k in range(m):
+        for _ in range(m):
             Q.append([yi_list[0]])
 
+    # Hermite-Tabelle aufbauen
     for i in range(1, n):
         for j in range(i, n):
             if z[j] == z[j - i]:
-                xi_index = 0
-                count = 0
+                # Ableitung verwenden
                 total = 0
-                for xi_vals in y_wert:
-                    total += len(xi_vals)
+                xi_index = 0
+                for vals in y_wert:
+                    total += len(vals)
                     if j < total:
-                        xi_index = count
+                        xi_index = xi_index
                         break
-                    count += 1
+                    xi_index += 1
                 Q[j].append(y_wert[xi_index][i] / factorial(i))
             else:
-                val = (Q[j][i - 1] - Q[j - 1][i - 1]) / (z[j] - z[j - i])
+                val = (Q[j][i-1] - Q[j-1][i-1]) / (z[j] - z[j-i])
                 Q[j].append(val)
 
+    # Hermite-Polynom konstruieren
     H = Polynom([0])
-    basis_polynome = []
-
     for i in range(n):
         term = Polynom([1])
         for j in range(i):
             term = term * Polynom([-z[j], 1])
-        term = term.poly_number_mult(Q[i][i])
-        basis_polynome.append(term)
+        term = term * Q[i][i]
         H = H + term
 
-    return basis_polynome, H, Q  # extra_info = Dividierte-Differenzen-Tabelle
+    return H  # **nur das fertige Polynom zurückgeben**

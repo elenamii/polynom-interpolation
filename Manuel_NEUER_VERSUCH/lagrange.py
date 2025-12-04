@@ -1,25 +1,37 @@
+# lagrange.py
+"""
+Lagrange-Interpolation
+- Berechnet das Lagrange-Polynom in ausmultiplizierter Form
+- Nutzt polynom.py für Polynom-Operationen
+"""
+
 from polynom import Polynom
 
 def lagrange_basis(x_wert, i):
+    """
+    Berechnet das i-te Lagrange-Basis-Polynom L_i(x) in ausmultiplizierter Form.
+    """
     n = len(x_wert)
-    L = Polynom([1])
+    L = Polynom([1])  # Startpolynom
 
     for j in range(n):
         if j != i:
-            L = L * Polynom([-x_wert[j], 1])
-            denom = x_wert[i] - x_wert[j]
-            L = L.poly_number_div(denom)
+            # (x - x_j) / (x_i - x_j)
+            factor = Polynom([-x_wert[j], 1])
+            L = L * factor
+            L = L.poly_number_div(x_wert[i] - x_wert[j])
     return L
 
 def lagrange_interpolation(x_wert, y_wert):
-    n = len(x_wert)
-    P = Polynom([0])
-    basis_polynome = []
+    """
+    Berechnet das Lagrange-Interpolationspolynom P(x) in ausmultiplizierter Form.
+    Gibt nur das Polynom zurück, keine Liste von Objekten.
+    """
+    P = Polynom([0])  # Startpolynom
 
-    for i in range(n):
-        Li = lagrange_basis(x_wert, i)
-        basis_polynome.append(Li)
-        term = Li.poly_number_mult(y_wert[i])
+    for i in range(len(x_wert)):
+        L = lagrange_basis(x_wert, i)
+        term = L * y_wert[i]  # multiplizieren mit Funktionswert
         P = P + term
 
-    return basis_polynome, P, None  # kein extra_info nötig
+    return P
