@@ -1,5 +1,3 @@
-# Einlesen von Stützstellen & Ableitungen
-
 # io.py
 """
 Dieses Modul kümmert sich um:
@@ -9,9 +7,17 @@ Dieses Modul kümmert sich um:
 """
 
 from lagrange import lagrange_interpolation, lagrange_basis
-from newton import newton_interpolation, newton_basis  # falls vorhanden
-from hermite import hermite_interpolation  # falls vorhanden
-from polynom import __mul__, __add__, poly_number_mul, poly_number_div, horner, __str__ , __rmul__
+try:
+    from newton import newton_interpolation, newton_basis
+except ImportError:
+    newton_interpolation = None
+    newton_basis = None
+try:
+    from hermite import hermite_interpolation
+except ImportError:
+    hermite_interpolation = None
+
+from polynom import Polynom
 
 def einlesen_stuetzstellen():
     """
@@ -37,25 +43,24 @@ def einlesen_stuetzstellen():
     return x_wert, y_wert
 
 
-def horner(poly, x):
+def horner(poly: Polynom, x: float) -> float:
     """
     Horner-Schema zur effizienten Auswertung eines Polynoms poly an der Stelle x.
-    poly: Liste von Koeffizienten [a0, a1, ..., an]
     """
-    result = poly[0]
-    for coef in poly[1:]:
+    result = 0
+    for coef in reversed(poly.coeffs):
         result = result * x + coef
     return result
 
 
-def ausmultiplizieren_linearfaktoren(faktoren):
+def ausmultiplizieren_linearfaktoren(faktoren: list[Polynom]) -> Polynom:
     """
     Multipliziert eine Liste von Linearfaktoren (Polynomen) aus.
-    faktoren: Liste von Polynomen, z.B. [[1, -x0], [1, -x1], ...]
+    faktoren: Liste von Polynom-Instanzen
     """
-    P = [1]
+    P = Polynom([1])
     for f in faktoren:
-        P = __mul__(P, f)
+        P = P * f
     return P
 
 
@@ -73,7 +78,7 @@ def main():
         print(f"L_{i}(x) = {L}")
 
     print("\n--- Lagrange-Interpolationspolynom ---")
-    P_lagrange = lagrange_interpolation(x_wert, [y[0] for y in y_wert])  # nur Funktionswerte für Standard-Lagrange
+    P_lagrange = lagrange_interpolation(x_wert, [y[0] for y in y_wert])  # nur Funktionswerte
 
     # Horner-Auswertung
     x_eval = float(input("\nAn welcher Stelle möchten Sie das Polynom auswerten? "))
@@ -81,15 +86,16 @@ def main():
     print(f"P({x_eval}) = {wert}")
 
     # ---------------- Newton-Interpolation ----------------
-    try:
-        print("\n--- Newton-Basis und Interpolation ---")
-        P_newton = newton_interpolation(x_wert, [y[0] for y in y_wert])
-        print(f"Newton-Interpolationspolynom: {P_newton}")
-    except Exception as e:
-        print("Newton-Interpolation nicht verfügbar:", e)
+    if newton_interpolation is not None:
+        try:
+            print("\n--- Newton-Basis und Interpolation ---")
+            P_newton = newton_interpolation(x_wert, [y[0] for y in y_wert])
+            print(f"Newton-Interpolationspolynom: {P_newton}")
+        except Exception as e:
+            print("Newton-Interpolation nicht verfügbar:", e)
 
     # ---------------- Hermite-Interpolation ----------------
-    if any(len(y) > 1 for y in y_wert):
+    if hermite_interpolation is not None and any(len(y) > 1 for y in y_wert):
         try:
             print("\n--- Hermite-Interpolation ---")
             P_hermite = hermite_interpolation(x_wert, y_wert)
@@ -100,4 +106,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
