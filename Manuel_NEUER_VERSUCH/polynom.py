@@ -1,10 +1,8 @@
-# Polynomklasse + Operationen (add, mult, horner, pretty-print)
-
 class Polynom:
     def __init__(self, coeffs: list[float]):
-        self.coeffs = coeffs  # Koeffizientenliste
+        self.coeffs = coeffs
 
-    def __add__(self, other):  # Polynom + Polynom
+    def __add__(self, other):
         result = []
         max_len = max(len(self.coeffs), len(other.coeffs))
         for i in range(max_len):
@@ -13,40 +11,35 @@ class Polynom:
             result.append(a + b)
         return Polynom(result)
 
-    def __mul__(self, other):  # Zahl oder Polynom
+    def __mul__(self, other):
         if isinstance(other, Polynom):
             result_len = len(self.coeffs) + len(other.coeffs) - 1
-        result = [0] * result_len
-        for i in range(len(self.coeffs)):
-            for j in range(len(other.coeffs)):
+            result = [0] * result_len
+            for i in range(len(self.coeffs)):
+                for j in range(len(other.coeffs)):
                     result[i + j] += self.coeffs[i] * other.coeffs[j]
             return Polynom(result)
-        else: #Zahl
-                return self.poly_number_mul(other)
-            
-    def __rmul__(self, number):  # Zahl * Polynom
-        return self.poly_number_mul(number)
-    
-    def poly_number_mult(self, number: float) -> 'Polynom': #erwarteter Rückgabetyp ist Polynom
-        result = []
-        for coeff in self.coeffs:
-            result.append(coeff * number)
-        return Polynom(result)
-    
-    def poly_number_div(self, number: float) -> 'Polynom':
-        if number == 0:
-            raise ValueError("Division durch Null ist nicht erlaubt.")
-        result = [c/number for c in self.coeffs]
-        return Polynom(result)
+        else:
+            return self.poly_number_mult(other)
 
-    def horner(self, x: float) -> float:
+    def __rmul__(self, number):
+        return self.poly_number_mult(number)
+
+    def poly_number_mult(self, number: float):
+        return Polynom([c * number for c in self.coeffs])
+
+    def poly_number_div(self, number: float):
+        if number == 0:
+            raise ValueError("Division durch Null nicht erlaubt.")
+        return Polynom([c / number for c in self.coeffs])
+
+    def horner(self, x: float):
         result = 0
         for coeff in reversed(self.coeffs):
             result = result * x + coeff
         return result
 
-    def degree(self) -> int:
-        """Gibt den Grad des Polynoms zurück."""
+    def degree(self):
         return len(self.coeffs) - 1
 
     def __str__(self):
@@ -61,12 +54,4 @@ class Polynom:
             else:
                 terms.append(f"{c}x^{i}")
 
-        if not terms:
-            return "0"
-
-        return " + ".join(terms)
-
-
-
-
-
+        return " + ".join(terms) if terms else "0"
