@@ -11,7 +11,7 @@ Dieses Modul kümmert sich um:
 from lagrange import lagrange_interpolation, lagrange_basis
 from newton import newton_interpolation, newton_basis  # falls vorhanden
 from hermite import hermite_interpolation  # falls vorhanden
-from polynom import poly_mult, poly_add, poly_number_mult, poly_number_div, Polynom
+from polynom import __mul__, __add__, poly_number_mul, poly_number_div, horner, __str__ , __rmul__
 
 def einlesen_stuetzstellen():
     """

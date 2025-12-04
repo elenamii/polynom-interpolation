@@ -1,6 +1,6 @@
 # lagrange.py
 
-from polynom import poly_mult, poly_add, poly_number_mult, poly_number_div
+from polynom import __mul__, __add__, poly_number_mul, poly_number_div
 
 def lagrange_basis(x_wert, i):
     """
@@ -12,10 +12,10 @@ def lagrange_basis(x_wert, i):
     for j in range(anzahl):
         if j != i:
             factor = [-x_wert[j], 1]  # (x - x_j)
-            L = poly_mult(L, factor)
+            L = poly_mul(L, factor)
             denominator = x_wert[i] - x_wert[j]
             L = poly_number_div(L, denominator)
-    return L
+    return Polynom(L)
 
 
 def lagrange_interpolation(x_wert, y_wert):
