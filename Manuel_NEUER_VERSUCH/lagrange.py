@@ -1,44 +1,33 @@
-# lagrange.py
-
-from polynom import __mul__, __add__, poly_number_mul, poly_number_div
+from polynom import Polynom
 
 def lagrange_basis(x_wert, i):
     """
-    Berechnet das i-te Lagrange-Basis-Polynom L_i(x) in ausmultiplizierter Form.
+    Berechnet das i-te Lagrange-Basis-Polynom L_i(x) als Polynom-Objekt.
     """
     anzahl = len(x_wert)
-    L = [1]  # Startpolynom
+    L = Polynom([1])  # Startpolynom: 1
+    denom = 1
 
     for j in range(anzahl):
         if j != i:
-            factor = [-x_wert[j], 1]  # (x - x_j)
-            L = poly_mul(L, factor)
-            denominator = x_wert[i] - x_wert[j]
-            L = poly_number_div(L, denominator)
-    return Polynom(L)
+            L *= Polynom([-x_wert[j], 1])  # (x - x_j)
+            denom *= (x_wert[i] - x_wert[j])
+
+    L = L.poly_number_div(denom)
+    return L
+
 
 
 def lagrange_interpolation(x_wert, y_wert):
-    """
-    Berechnet das Lagrange-Interpolationspolynom P(x) in ausmultiplizierter Form.
-    """
-    anzahl = len(x_wert)
-    P = [0]  # Startpolynom
-
-    print("Berechnung der Lagrange-Basis-Polynome:")
-    for i in range(anzahl):
+    if len(x_wert) != len(set(x_wert)):
+        raise ValueError("Mehrere identische x-Werte ohne Ableitungen führen zu Fehlern. "
+                         "Bitte Hermite-Interpolation verwenden.")
+    P = Polynom([0])
+    for i, yi in enumerate(y_wert):
         L = lagrange_basis(x_wert, i)
-        print(f"L_{i}(x) = {L}")  # Ausgabe des Basis-Polynoms
-
-        L = poly_number_mult(L, y_wert[i])
-        P = poly_add(P, L)
-
-    print(f"\nInterpolationspolynom P(x) = {P}")
+        P = P + yi*L
     return P
 
-
-# Optional: Testaufruf, kann beim Import aus io.py weggelassen werden
-if __name__ == "__main__":
-    x_wert = [1, 2, 3]
-    y_wert = [2, 3, 5]
-    lagrange_interpolation(x_wert, y_wert)
+P = lagrange_interpolation([0,1,2], [1,3,2])
+print(P)
+    

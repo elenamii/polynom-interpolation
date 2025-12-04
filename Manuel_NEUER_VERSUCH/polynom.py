@@ -1,83 +1,80 @@
-# Polynomklasse + Operationen (add, mult, horner, pretty-print)
-
 class Polynom:
     def __init__(self, coeffs: list[float]):
-        self.coeffs = coeffs  # Koeffizientenliste
+        self.coeffs = coeffs[:]
+        self.trim()
 
-    def __add__(self, other):  # Polynom + Polynom
-        result = []
+    def trim(self):
+        while len(self.coeffs) > 1 and abs(self.coeffs[-1]) < 1e-12:
+            self.coeffs.pop()
+
+    def __add__(self, other):
         max_len = max(len(self.coeffs), len(other.coeffs))
+        result = [0]*max_len
         for i in range(max_len):
             a = self.coeffs[i] if i < len(self.coeffs) else 0
             b = other.coeffs[i] if i < len(other.coeffs) else 0
-            result.append(a + b)
+            result[i] = a + b
         return Polynom(result)
 
-    def __mul__(self, other):  # Zahl oder Polynom
+    def __mul__(self, other):
         if isinstance(other, Polynom):
-            result_len = len(self.coeffs) + len(other.coeffs) - 1
-        result = [0] * result_len
-        for i in range(len(self.coeffs)):
-            for j in range(len(other.coeffs)):
-                result[i + j] += self.coeffs[i] * other.coeffs[j]
-                return Polynom(result)
-            else: #Zahl
-                return self.poly_number_mul(other)
-            
-    def __rmul__(self, number):  # Zahl * Polynom
-        return self.poly_number_mul(number)
-    
-    def poly_number_mul(self, number: float) -> 'Polynom': #erwarteter Rückgabetyp ist Polynom
-        result = []
-        for coeff in self.coeffs:
-            result.append(coeff * number)
-        return Polynom(result)
-    
-    def poly_number_div(self, number: float) -> 'Polynom':
-        if number == 0:
-            raise ValueError("Division durch Null ist nicht erlaubt.")
-        result = [c/number for c in self.coeffs]
-        return Polynom(result)
+            r = [0]*(len(self.coeffs)+len(other.coeffs)-1)
+            for i in range(len(self.coeffs)):
+                for j in range(len(other.coeffs)):
+                    r[i+j] += self.coeffs[i]*other.coeffs[j]
+            return Polynom(r)
+        else:
+            return Polynom([c*other for c in self.coeffs])
 
-    def horner(self, x: float) -> float:
+    def __rmul__(self, number):
+        return self*number
+
+    def poly_number_div(self, number):
+        if number == 0:
+            raise ValueError("Division durch Null!")
+        return Polynom([c/number for c in self.coeffs])
+
+    def horner(self, x):
         result = 0
-        for coeff in reversed(self.coeffs):
-            result = result * x + coeff
+        for c in reversed(self.coeffs):
+            result = result*x + c
         return result
 
-    def degree(self) -> int:
-        """Gibt den Grad des Polynoms zurück."""
-        return len(self.coeffs) - 1
+    def degree(self):
+        return len(self.coeffs)-1
 
-    def __str__(self) -> str:
-       """Gibt das Polynom als formatierten String zurück, z.B. -2x^2 + x + 3"""
-       coeffs = self.coeffs
-       if not coeffs:
+    def __str__(self):
+        if not self.coeffs:
             return "0"
-       degree = len(coeffs) - 1
-       parts = []
-       for i, coeff in enumerate(coeffs):
-            if coeff == 0:
+
+        parts = []
+        degree = len(self.coeffs) - 1
+        for i, coeff in enumerate(self.coeffs):
+            if abs(coeff) < 1e-12:
                 continue
-            current_degree = degree - i
-            sign = '+' if coeff > 0 else '-'
-            a = abs(coeff)
-            if current_degree == 0:
-                term = f"{a:g}"
-            elif current_degree == 1:
-                term = "x" if a == 1 else f"{a:g}x"
+
+            deg = degree - i
+            c = coeff
+            # Ganze Zahl als int anzeigen
+            c_str = str(int(c)) if c.is_integer() else f"{c:.4f}"
+
+            if deg == 0:
+                term = f"{c_str}"
+            elif deg == 1:
+                term = f"{'' if c==1 else '-' if c==-1 else c_str}x"
             else:
-                term = f"x^{current_degree}" if a == 1 else f"{a:g}x^{current_degree}"
-            parts.append((sign, term))
-            if not parts:
-                return "0"
-            first_sign, first_term = parts[0]
-            s = ('' if first_sign == '+' else '-') + first_term
-            for sign, term in parts[1:]:
-                s += f" {sign} {term}"
-                return s
+                term = f"{'' if c==1 else '-' if c==-1 else c_str}x^{deg}"
 
+            parts.append(term)
 
+        if not parts:
+            return "0"
 
-
+        s = parts[0]
+        for t in parts[1:]:
+            if t.startswith('-'):
+                s += ' - ' + t[1:]
+            else:
+                s += ' + ' + t
+        return s
 
