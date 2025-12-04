@@ -1,0 +1,1 @@
+# Einlesen von Stützstellen & Ableitungen
