@@ -9,9 +9,9 @@ Dieses Modul kümmert sich um:
 """
 
 from lagrange import lagrange_interpolation, lagrange_basis
-#from newton import newton_interpolation, newton_basis  # falls vorhanden
-#from hermite import hermite_interpolation  # falls vorhanden
-#from polynom import poly_mult, poly_add, poly_number_mult, poly_number_div
+from newton import newton_interpolation, newton_basis  # falls vorhanden
+from hermite import hermite_interpolation  # falls vorhanden
+from polynom import __mul__, __add__, poly_number_mul, poly_number_div
 
 def einlesen_stuetzstellen():
     """
@@ -55,7 +55,7 @@ def ausmultiplizieren_linearfaktoren(faktoren):
     """
     P = [1]
     for f in faktoren:
-        P = poly_mult(P, f)
+        P = __mul__(P, f)
     return P
 
 
