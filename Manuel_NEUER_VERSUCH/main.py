@@ -9,7 +9,7 @@ Hauptprogramm für polynom-interpolation
 - Auswertung des Polynoms an einer Stelle
 """
 
-from io import einlesen_stuetzstellen, horner
+from io_input import einlesen_stuetzstellen, horner
 from lagrange import lagrange_interpolation, lagrange_basis
 from newton import newton_interpolation, newton_basis
 from hermite import hermite_interpolation
