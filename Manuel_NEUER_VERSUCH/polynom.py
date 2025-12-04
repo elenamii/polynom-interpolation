@@ -19,15 +19,15 @@ class Polynom:
         result = [0] * result_len
         for i in range(len(self.coeffs)):
             for j in range(len(other.coeffs)):
-                result[i + j] += self.coeffs[i] * other.coeffs[j]
-                return Polynom(result)
-            else: #Zahl
+                    result[i + j] += self.coeffs[i] * other.coeffs[j]
+            return Polynom(result)
+        else: #Zahl
                 return self.poly_number_mul(other)
             
     def __rmul__(self, number):  # Zahl * Polynom
         return self.poly_number_mul(number)
     
-    def poly_number_mul(self, number: float) -> 'Polynom': #erwarteter Rückgabetyp ist Polynom
+    def poly_number_mult(self, number: float) -> 'Polynom': #erwarteter Rückgabetyp ist Polynom
         result = []
         for coeff in self.coeffs:
             result.append(coeff * number)
@@ -49,33 +49,22 @@ class Polynom:
         """Gibt den Grad des Polynoms zurück."""
         return len(self.coeffs) - 1
 
-    def __str__(self) -> str:
-       """Gibt das Polynom als formatierten String zurück, z.B. -2x^2 + x + 3"""
-       coeffs = self.coeffs
-       if not coeffs:
-            return "0"
-       degree = len(coeffs) - 1
-       parts = []
-       for i, coeff in enumerate(coeffs):
-            if coeff == 0:
+    def __str__(self):
+        terms = []
+        for i, c in enumerate(self.coeffs):
+            if c == 0:
                 continue
-            current_degree = degree - i
-            sign = '+' if coeff > 0 else '-'
-            a = abs(coeff)
-            if current_degree == 0:
-                term = f"{a:g}"
-            elif current_degree == 1:
-                term = "x" if a == 1 else f"{a:g}x"
+            if i == 0:
+                terms.append(f"{c}")
+            elif i == 1:
+                terms.append(f"{c}x")
             else:
-                term = f"x^{current_degree}" if a == 1 else f"{a:g}x^{current_degree}"
-            parts.append((sign, term))
-            if not parts:
-                return "0"
-            first_sign, first_term = parts[0]
-            s = ('' if first_sign == '+' else '-') + first_term
-            for sign, term in parts[1:]:
-                s += f" {sign} {term}"
-                return s
+                terms.append(f"{c}x^{i}")
+
+        if not terms:
+            return "0"
+
+        return " + ".join(terms)
 
 
 

@@ -1,5 +1,3 @@
-# Dividierte Differenzen + Newton-Basis + Interpolationspolynom
-
 # newton.py
 """
 Newton-Interpolation
@@ -8,19 +6,19 @@ Newton-Interpolation
 - Nutzt polynom.py für Polynomoperationen
 """
 
-from polynom import poly_mult, poly_add, poly_number_mult, Polynom
+from polynom import Polynom
+from sympy import symbols, simplify, expand
 
 def dividierte_differenzen(x_wert, y_wert):
     """
     Berechnet die Tabelle der div. Differenzen.
     x_wert: Liste der Stützstellen
     y_wert: Liste der Funktionswerte
-    Rückgabe: Liste der ersten Einträge jeder Spalte (Newton-Koeffizienten)
+    Rückgabe: Liste der Newton-Koeffizienten
     """
     n = len(x_wert)
-    # Tabelle initialisieren
-    F = [y for y in y_wert]
-    coeffs = [F[0]]  # erster Koeffizient
+    F = [yi for yi in y_wert]
+    coeffs = [F[0]]
 
     for j in range(1, n):
         for i in range(n - 1, j - 1, -1):
@@ -32,34 +30,73 @@ def dividierte_differenzen(x_wert, y_wert):
 
 def newton_basis(x_wert, i):
     """
-    Berechnet das i-te Newton-Basis-Polynom in ausmultiplizierter Form
+    Berechnet das i-te Newton-Basis-Polynom in ausmultiplizierter Form.
+    N_i(x) = ∏_{j=0..i-1} (x - x_j)
     """
-    term = Polynom([1])
+    term = Polynom([1])   # Start: 1
     for j in range(i):
-        term = poly_mult(term, [-x_wert[j], 1])  # (x - x_j)
+        term = poly_mult(term, [-x_wert[j], 1])   # multipliziere mit (x - x_j)
     return term
 
 
 def newton_interpolation(x_wert, y_wert):
     """
-    Berechnet das Newton-Interpolationspolynom in ausmultiplizierter Form
+    Berechnet das Newton-Interpolationspolynom vollständig ausmultipliziert.
+    Gibt zusätzlich alle Newton-Basis-Polynome aus.
     """
+    X = symbols('x')
     coeffs = dividierte_differenzen(x_wert, y_wert)
     P = Polynom([0])
 
-    print("--- Newton-Basis-Polynome ---")
+    print("\n--- Newton-Basis-Polynome N_i(x) (ausmultipliziert) ---")
+    basis_sympy = []
+
     for i in range(len(x_wert)):
-        B = newton_basis(x_wert, i)
-        print(f"N_{i}(x) = {B}")
-        term = poly_number_mult(B, coeffs[i])
+        Ni = newton_basis(x_wert, i)
+        print(f"N_{i}(x) = {Ni}")
+
+        # Für die SymPy-Ausgabe (faktorisierte & ausmultiplizierte Darstellung)
+        expr = 1
+        for j in range(i):
+            expr *= (X - x_wert[j])
+        basis_sympy.append(expr)
+
+        term = poly_number_mult(Ni, coeffs[i])
         P = poly_add(P, term)
 
-    print(f"\nNewton-Interpolationspolynom P(x) = {P}")
+    print("\n--- Newton-Basis-Polynome in SymPy (faktorisiert) ---")
+    for i, bi in enumerate(basis_sympy):
+        print(f"N_{i}(x) = {simplify(bi)}")
+
+    print("\n--- Newton-Basis-Polynome in SymPy (ausmultipliziert) ---")
+    for i, bi in enumerate(basis_sympy):
+        print(f"N_{i}(x) = {expand(bi)}")
+
+    print(f"\n--- Newton-Interpolationspolynom P(x) (ausmultipliziert) ---")
+    print(P)
+
     return P
 
 
-# Optional: Testlauf
+# ---------------------------
+# Programmstart
+# ---------------------------
+
 if __name__ == "__main__":
-    x_wert = [1, 2, 3]
-    y_wert = [2, 3, 5]
-    newton_interpolation(x_wert, y_wert)
+    import sys
+
+    print("Newton-Interpolation\n")
+
+    n = int(input("Wie viele Punkte hast du? "))
+
+    x = []
+    y = []
+
+    print("\nBitte die Punkte eingeben:")
+    for i in range(n):
+        xi = float(input(f"x{i}: "))
+        yi = float(input(f"y{i}: "))
+        x.append(xi)
+        y.append(yi)
+
+    newton_interpolation(x, y)
