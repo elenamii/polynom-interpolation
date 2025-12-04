@@ -1,6 +1,7 @@
 # ich will das newton polynom machen
 # ich hoffe der code funktioniert :D
-
+#funktioniert nur wenn man erstmal sympy mit pip inytall sympy runterlädt
+import sympy as sympy
 from sympy import symbols, simplify
 
 # wie viele punkte?
@@ -24,7 +25,7 @@ a = y.copy()
 
 for k in range(1, n):
     for i in range(n-1, k-1, -1):
-        a[i] = (a[i] - a[i-1]) / (x[i] - x[i-1])
+        a[i] = (a[i] - a[i-1]) / (x[i] - x[i-1]) #division durch null geht nicht !! 
 
 # jetzt das polynom machen
 X = symbols("x")
