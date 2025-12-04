@@ -33,6 +33,14 @@ class Polynom:
         for coeff in self.coeffs:
             result.append(coeff * number)
         return Polynom(result)
+    
+    def poly_number_div(self, number: float) -> 'Polynom':
+        result = []
+        for coeff in self.coeffs:
+            print(f"coeff: {coeff}, number: {number}, type of number: {type(number)}")
+            if number !=0:
+                result.append(coeff / number)
+        return Polynom(result)
 
     def horner(self, x: float) -> float:
         # Placeholder: implement Horner-Schema later
