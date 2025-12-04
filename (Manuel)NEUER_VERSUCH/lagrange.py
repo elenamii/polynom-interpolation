@@ -1,0 +1,1 @@
+# Lagrange-Basis + Interpolationspolynom + Ausgabe
