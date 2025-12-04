@@ -1,160 +1,54 @@
-import tkinter as tk
-from tkinter import messagebox
 from polynom import Polynom
-from lagrange import lagrange_interpolation, lagrange_basis
-from newton import newton_interpolation, newton_basis
-from hermite import hermite_interpolation
-from io_input import horner
+from math import factorial
 
-# --- Hilfsfunktionen für schöne Poly-Darstellung ---
-class MathUtils:
-    @staticmethod
-    def superscript(n):
-        table = {"0":"⁰","1":"¹","2":"²","3":"³","4":"⁴",
-                 "5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹"}
-        return "".join(table[d] for d in str(n))
+def hermite_interpolation(x_wert, y_wert):
+    """
+    Hermite-Interpolation mit mehrfachen Stützstellen und Ableitungen.
+    y_wert[i] = [f(x_i), f'(x_i), f''(x_i), ...] 
+    """
 
-    @staticmethod
-    def print_poly(poly: Polynom, decimals=4):
-        """
-        Gibt ein Polynom in schöner Normalform zurück:
-        - Höchste Potenz zuerst
-        - Vorzeichen korrekt
-        - 1/-1 wird sauber behandelt
-        """
-        coeffs = poly.coeffs
-        if not coeffs:
-            return "0"
+    # 1. Wiederholte Stützstellen auflisten
+    z = []
+    f = []
+    for xi, yi_list in zip(x_wert, y_wert):
+        m = len(yi_list)
+        for _ in range(m):
+            z.append(xi)
+            f.append(yi_list[0])  # Funktionswert immer in f
 
-        terms = []
-        degree = len(coeffs) - 1
-        for i in range(degree, -1, -1):  # höchste Potenz zuerst
-            coeff = round(coeffs[i], decimals)
-            if abs(coeff) < 1e-12:
-                continue  # 0 überspringen
+    n = len(z)
 
-            # Vorzeichen
-            sign = '+' if coeff > 0 else '-'
-            a = abs(coeff)
-
-            # Term bauen
-            if i == 0:
-                term = f"{a:g}"
-            elif i == 1:
-                if a == 1:
-                    term = "x"
-                else:
-                    term = f"{a:g}x"
-            else:
-                if a == 1:
-                    term = f"x{MathUtils.superscript(i)}"
-                else:
-                    term = f"{a:g}x{MathUtils.superscript(i)}"
-
-            terms.append((sign, term))
-
-        if not terms:
-            return "0"
-
-        # erstes Vorzeichen entfernen, falls +
-        first_sign, first_term = terms[0]
-        s = first_term if first_sign == '+' else f"-{first_term}"
-
-        for sign, term in terms[1:]:
-            s += f" {sign} {term}"
-
-        return s
-
-# --- GUI ---
-window = tk.Tk()
-window.title("Polynom-Interpolation")
-window.geometry("700x700")
-
-method_var = tk.StringVar(value="1")
-stuetz_entries_x = []
-stuetz_entries_y = []
-
-# --- Funktionen ---
-def create_fields():
-    global stuetz_entries_x, stuetz_entries_y
-    try:
-        n = int(anzStuetz.get())
-        if n <= 0:
-            raise ValueError
-    except ValueError:
-        messagebox.showerror("Fehler", "Bitte eine gültige positive Zahl eingeben!")
-        return
-
-    # Alte Felder entfernen
-    for w in dynamic_frame.winfo_children():
-        w.destroy()
-    stuetz_entries_x = []
-    stuetz_entries_y = []
-
+    # 2. Divided Differences Matrix initialisieren
+    Q = [[0.0]*n for _ in range(n)]
     for i in range(n):
-        tk.Label(dynamic_frame, text=f"x_{i} =").grid(row=i, column=0, padx=5, pady=5)
-        entry_x = tk.Entry(dynamic_frame)
-        entry_x.grid(row=i, column=1, padx=5, pady=5)
+        Q[i][0] = f[i]
 
-        tk.Label(dynamic_frame, text=f"y_{i} (ggf. Ableitungen kommasepariert) =").grid(row=i, column=2, padx=5, pady=5)
-        entry_y = tk.Entry(dynamic_frame)
-        entry_y.grid(row=i, column=3, padx=5, pady=5)
+    # 3. Divided Differences berechnen
+    for j in range(1, n):
+        for i in range(j, n):
+            if z[i] == z[i-j]:
+                # gleiche Stützstelle -> Ableitung verwenden
+                # Finde den Index der Original-Stützstelle
+                idx = 0
+                total = len(y_wert[0])
+                while i >= total:
+                    idx += 1
+                    total += len(y_wert[idx])
+                Q[i][j] = y_wert[idx][j] / factorial(j)
+            else:
+                Q[i][j] = (Q[i][j-1] - Q[i-1][j-1]) / (z[i] - z[i-j])
 
-        stuetz_entries_x.append(entry_x)
-        stuetz_entries_y.append(entry_y)
+    # 4. Hermite-Polynom aufbauen
+    H = Polynom([0])
+    for i in range(n):
+        term = Polynom([1])
+        for j in range(i):
+            term *= Polynom([-z[j], 1])  # (x - z_j)
+        term *= Q[i][i]
+        H += term
 
-def calculate():
-    try:
-        x_vals = [float(e.get()) for e in stuetz_entries_x]
-        y_vals = []
-        for e in stuetz_entries_y:
-            val_str = e.get().replace(" ", "")
-            y_list = [float(v) for v in val_str.split(",")]
-            y_vals.append(y_list)
-    except ValueError:
-        messagebox.showerror("Fehler", "Bitte alle Eingaben korrekt ausfüllen!")
-        return
+    return H
 
-    method = method_var.get()
-    result_poly = None
-    poly_name = "P(x)"
-
-    try:
-        if method == "1":  # Lagrange
-            result_poly = lagrange_interpolation(x_vals, [y[0] for y in y_vals])
-            poly_name = "L(x)"
-        elif method == "2":  # Hermite
-            result_poly = hermite_interpolation(x_vals, y_vals)
-            poly_name = "H(x)"
-        elif method == "3":  # Newton
-            result_poly = newton_interpolation(x_vals, [y[0] for y in y_vals])
-            poly_name = "N(x)"
-    except Exception as e:
-        messagebox.showerror("Interpolation fehlgeschlagen", f"{e}")
-        return
-
-    # Ergebnis schön anzeigen
-    poly_str = MathUtils.print_poly(result_poly)
-    ergebnis_label.config(text=f"{poly_name} = {poly_str}")
-
-# --- GUI Aufbau ---
-tk.Label(window, text="1. Methode wählen:").pack(pady=5)
-tk.Radiobutton(window, text="Lagrange", variable=method_var, value="1").pack()
-tk.Radiobutton(window, text="Hermite", variable=method_var, value="2").pack()
-tk.Radiobutton(window, text="Newton", variable=method_var, value="3").pack()
-
-tk.Label(window, text="2. Anzahl Stützstellen eingeben:").pack(pady=5)
-anzStuetz = tk.Entry(window)
-anzStuetz.pack(pady=5)
-
-tk.Button(window, text="Formular erstellen", command=create_fields).pack(pady=5)
-
-dynamic_frame = tk.Frame(window)
-dynamic_frame.pack(pady=10)
-
-tk.Button(window, text="Berechnen", command=calculate).pack(pady=10)
-
-ergebnis_label = tk.Label(window, text="Ergebnis:", justify="left", font=("Arial", 12))
-ergebnis_label.pack(pady=10)
-
-window.mainloop()
+# --- Test ---
+if __name__ == "__main__":
+    main()
