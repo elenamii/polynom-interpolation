@@ -14,19 +14,18 @@ class Polynom:
         return Polynom(result)
 
     def __mul__(self, other):  # Zahl oder Polynom
-        result_len = len(self.coeffs) + len(other.coeffs) - 1
+        if isinstance(other, Polynom):
+            result_len = len(self.coeffs) + len(other.coeffs) - 1
         result = [0] * result_len
         for i in range(len(self.coeffs)):
             for j in range(len(other.coeffs)):
-                self_coeffs = self.coeffs[i]
-                other_coeffs = other.coeffs[j]
-                
-                product = self_coeffs * other_coeffs
-                
-                position = i + j
-                
-                result[position] = result[position] + product
-        return Polynom(result)
+                result[i + j] += self.coeffs[i] * other.coeffs[j]
+                return Polynom(result)
+            else: #Zahl
+                return self.poly_number_mul(other)
+            
+    def __rmul__(self, number):  # Zahl * Polynom
+        return self.poly_number_mul(number)
     
     def poly_number_mul(self, number: float) -> 'Polynom': #erwarteter Rückgabetyp ist Polynom
         result = []
@@ -35,24 +34,48 @@ class Polynom:
         return Polynom(result)
     
     def poly_number_div(self, number: float) -> 'Polynom':
-        result = []
-        for coeff in self.coeffs:
-            print(f"coeff: {coeff}, number: {number}, type of number: {type(number)}")
-            if number !=0:
-                result.append(coeff / number)
+        if number == 0:
+            raise ValueError("Division durch Null ist nicht erlaubt.")
+        result = [c/number for c in self.coeffs]
         return Polynom(result)
 
     def horner(self, x: float) -> float:
-        # Placeholder: implement Horner-Schema later
-        pass
+        result = 0
+        for coeff in reversed(self.coeffs):
+            result = result * x + coeff
+        return result
 
     def degree(self) -> int:
-        # Placeholder: return the degree of the polynomial
-        pass
+        """Gibt den Grad des Polynoms zurück."""
+        return len(self.coeffs) - 1
 
     def __str__(self) -> str:
-        # Placeholder: return polynomial as string
-        pass
+       """Gibt das Polynom als formatierten String zurück, z.B. -2x^2 + x + 3"""
+       coeffs = self.coeffs
+       if not coeffs:
+            return "0"
+       degree = len(coeffs) - 1
+       parts = []
+       for i, coeff in enumerate(coeffs):
+            if coeff == 0:
+                continue
+            current_degree = degree - i
+            sign = '+' if coeff > 0 else '-'
+            a = abs(coeff)
+            if current_degree == 0:
+                term = f"{a:g}"
+            elif current_degree == 1:
+                term = "x" if a == 1 else f"{a:g}x"
+            else:
+                term = f"x^{current_degree}" if a == 1 else f"{a:g}x^{current_degree}"
+            parts.append((sign, term))
+            if not parts:
+                return "0"
+            first_sign, first_term = parts[0]
+            s = ('' if first_sign == '+' else '-') + first_term
+            for sign, term in parts[1:]:
+                s += f" {sign} {term}"
+                return s
 
 
 
