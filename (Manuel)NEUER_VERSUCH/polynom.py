@@ -14,8 +14,25 @@ class Polynom:
         return Polynom(result)
 
     def __mul__(self, other):  # Zahl oder Polynom
-        # Placeholder: implement multiplication later
-        pass
+        result_len = len(self.coeffs) + len(other.coeffs) - 1
+        result = [0] * result_len
+        for i in range(len(self.coeffs)):
+            for j in range(len(other.coeffs)):
+                self_coeffs = self.coeffs[i]
+                other_coeffs = other.coeffs[j]
+                
+                product = self_coeffs * other_coeffs
+                
+                position = i + j
+                
+                result[position] = result[position] + product
+        return Polynom(result)
+    
+    def poly_number_mul(self, number: float) -> 'Polynom': #erwarteter Rückgabetyp ist Polynom
+        result = []
+        for coeff in self.coeffs:
+            result.append(coeff * number)
+        return Polynom(result)
 
     def horner(self, x: float) -> float:
         # Placeholder: implement Horner-Schema later
