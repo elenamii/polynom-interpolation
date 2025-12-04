@@ -1,6 +1,6 @@
 from io_input import einlesen_stuetzstellen
 from lagrange import lagrange_interpolation, lagrange_basis
-from newton import newton_interpolation
+from newton import newton_interpolation, newton_basis
 from hermite import hermite_interpolation
 
 def menu():
@@ -26,6 +26,11 @@ def auswahl_lagrange(x_wert, y_wert):
     print(f"P({x_eval}) = {wert}")
 
 def auswahl_newton(x_wert, y_wert):
+    print("\n--- Newton-Basis-Polynome ---")
+    for i in range(len(x_wert)):
+        N = newton_basis(x_wert, i)
+        print(f"N_{i}(x) = {N}")
+
     P = newton_interpolation(x_wert, [y[0] for y in y_wert])
     print(f"Newton-Interpolationspolynom: {P}")
 
@@ -54,9 +59,15 @@ def main():
 
         x_wert, y_wert = einlesen_stuetzstellen()
 
+        has_derivatives = any(len(y) > 1 for y in y_wert)
+
         if wahl == "1":
+            if has_derivatives:
+                print("WARNUNG: Ableitungen werden bei Lagrange-Interpolation ignoriert!")
             auswahl_lagrange(x_wert, y_wert)
         elif wahl == "2":
+            if has_derivatives:
+                print("WARNUNG: Ableitungen werden bei Newton-Interpolation ignoriert!")
             auswahl_newton(x_wert, y_wert)
         elif wahl == "3":
             auswahl_hermite(x_wert, y_wert)
