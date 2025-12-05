@@ -27,7 +27,3 @@ def lagrange_interpolation(x_wert, y_wert):
         L = lagrange_basis(x_wert, i)
         P = P + yi*L
     return P
-
-P = lagrange_interpolation([0,1,2], [1,3,2])
-print(P)
-    

@@ -56,7 +56,10 @@ class Polynom:
             deg = degree - i
             c = coeff
             # Ganze Zahl als int anzeigen
-            c_str = str(int(c)) if c.is_integer() else f"{c:.4f}"
+            if isinstance(c, int):
+                c_str = str(c)
+            else:
+                c_str = str(int(c)) if c.is_integer() else f"{c:.4f}"
 
             if deg == 0:
                 term = f"{c_str}"
