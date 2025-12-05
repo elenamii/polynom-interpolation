@@ -115,10 +115,10 @@ class MathWithPolynomials:
         Returns:
             str: Die formatierte Zeichenkette des Polynoms.
         """
-        # Kopie der Liste, um das Original nicht zu verändern
+        # Kopie der Liste
         current_coeffs = list(coeffs) 
         
-        # 1. Entferne führende/hohe Terme, die numerisch Null sind (Bereinigung)
+        # 1(Bereinigung)
         while current_coeffs and abs(current_coeffs[-1]) < zero_threshold:
             current_coeffs.pop()
             
@@ -127,15 +127,15 @@ class MathWithPolynomials:
 
         result_terms = []
         
-        # 2. Durchlaufe Koeffizienten vom höchsten Grad abwärts (für absteigende Ordnung)
+        # Durchlaufe Koeffizienten vom höchsten Grad abwärts 
         for grad in range(len(current_coeffs) - 1, -1, -1):
             coeff = current_coeffs[grad]
             
-            # Ignoriere Terme, die unter dem Schwellenwert liegen
+            # Ignoriere Terme unter  Schwellenwert
             if abs(coeff) < zero_threshold:
                 continue
                 
-            # Runden des Koeffizienten für die Anzeige
+            # Runden des Koeffizienten für Anzeige
             coeff_val = round(coeff, digits)
 
             # Wenn der Koeffizient nach dem Runden Null ist, überspringen
