@@ -53,3 +53,4 @@ def hermite_interpolation(x_wert, y_wert):
         H = H + term
 
     return H  # **nur das fertige Polynom zurückgeben**
+

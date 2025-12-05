@@ -31,7 +31,7 @@ def einlesen_stuetzstellen() -> Tuple[List[float], List[List[float]]]:
 
     return x_wert, y_wert
 
-def horner(poly: Polynom, x: float) -> float:
+#def horner(poly: Polynom, x: float) -> float:
     """
     Horner-Schema zur effizienten Auswertung eines Polynoms poly an der Stelle x.
     """

@@ -55,3 +55,127 @@ class Polynom:
                 terms.append(f"{c}x^{i}")
 
         return " + ".join(terms) if terms else "0"
+
+
+import math
+
+class MathWithPolynomials:
+    """
+    Stellt nützliche, generische Funktionen zur Manipulation und 
+    formatierten Ausgabe von Polynomen bereit.
+    Polynome werden als Liste von Koeffizienten dargestellt, 
+    beginnend mit dem Grad 0.
+    Beispiel: [1, 2, 3] entspricht P(x) = 1 + 2x + 3x^2
+    """
+    
+    @staticmethod
+    def superscript(n):
+        """Konvertiert eine Zahl in hochgestellte Zeichen für Exponenten."""
+        # Da wir nur bis Grad 3 gehen (für Hermite), sind dies die wichtigsten
+        table = {
+            "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴",
+            "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹"
+        }
+        # Für den Grad 1 (x) oder Grad 0 (Konstante) wird kein Hochzeichen benötigt.
+        if n <= 1:
+            return "" 
+            
+        return "".join(table.get(d, '') for d in str(n))
+
+    @staticmethod
+    def poly_mul(p, q):
+        """Multipliziert zwei Polynome p und q."""
+        r = [0.0] * (len(p) + len(q) - 1)
+        for i in range(len(p)):
+            for j in range(len(q)):
+                r[i+j] += p[i] * q[j]
+        return r
+
+    @staticmethod
+    def poly_add(p, q):
+        """Addiert zwei Polynome p und q."""
+        n = max(len(p), len(q))
+        r = [0.0]*n
+        for i in range(n):
+            if i < len(p): r[i] += p[i]
+            if i < len(q): r[i] += q[i]
+        return r
+    
+    @staticmethod
+    def print_poly_schoen(coeffs, digits=6, zero_threshold=1e-10):
+        """
+        Gibt ein Polynom in mathematisch schöner, absteigender Schreibweise (x^n...x^0) aus.
+        
+        Args:
+            coeffs (list): Liste der Koeffizienten [a0, a1, a2, ...]
+            digits (int): Anzahl der Nachkommastellen für die Rundung.
+            zero_threshold (float): Koeffizienten, die kleiner als dieser 
+                                    Schwellenwert sind, werden ignoriert.
+        
+        Returns:
+            str: Die formatierte Zeichenkette des Polynoms.
+        """
+        # Kopie der Liste, um das Original nicht zu verändern
+        current_coeffs = list(coeffs) 
+        
+        # 1. Entferne führende/hohe Terme, die numerisch Null sind (Bereinigung)
+        while current_coeffs and abs(current_coeffs[-1]) < zero_threshold:
+            current_coeffs.pop()
+            
+        if not current_coeffs:
+            return "0"
+
+        result_terms = []
+        
+        # 2. Durchlaufe Koeffizienten vom höchsten Grad abwärts (für absteigende Ordnung)
+        for grad in range(len(current_coeffs) - 1, -1, -1):
+            coeff = current_coeffs[grad]
+            
+            # Ignoriere Terme, die unter dem Schwellenwert liegen
+            if abs(coeff) < zero_threshold:
+                continue
+                
+            # Runden des Koeffizienten für die Anzeige
+            coeff_val = round(coeff, digits)
+
+            # Wenn der Koeffizient nach dem Runden Null ist, überspringen
+            if abs(coeff_val) < 1e-9:
+                continue
+
+            abs_coeff = abs(coeff_val)
+
+            # 3. Formatierung der Zahl (Vermeidung von 'e' und unnötigen Nullen)
+            if abs(abs_coeff - round(abs_coeff)) < 1e-9:
+                # Fast ganzzahlig
+                formatted_coeff = str(round(abs_coeff))
+            else:
+                # Float-Formatierung mit dynamischer Kürzung der Nullen am Ende
+                formatted_coeff = f"{abs_coeff:.{digits}f}".rstrip('0').rstrip('.')
+            
+            # 4. Verknüpfung und Vorzeichen
+            sign = ""
+            if result_terms: 
+                # Fügt '+ ' oder ' - ' hinzu, wenn es nicht der erste Term ist
+                sign = " + " if coeff_val > 0 else " - "
+            elif coeff_val < 0:
+                # Fügt '-' am Anfang hinzu, wenn der erste Term negativ ist
+                sign = "-"
+                
+            # 5. Term-Erstellung (Sonderbehandlung für Koeffizient 1)
+            term = ""
+            is_one = (formatted_coeff == "1")
+
+            if grad == 0:
+                # Term x^0 (Konstante)
+                term = formatted_coeff
+            elif grad == 1:
+                # Term x^1
+                term = "x" if is_one else f"{formatted_coeff}x"
+            else:
+                # Term x^n
+                power = MathWithPolynomials.superscript(grad)
+                term = f"x{power}" if is_one else f"{formatted_coeff}x{power}"
+                    
+            result_terms.append(sign + term)
+
+        return "".join(result_terms)

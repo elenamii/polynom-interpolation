@@ -7,11 +7,11 @@ Hauptprogramm für Polynom-Interpolation
 - Auswertung des Polynoms an einer Stelle
 """
 
-from io_input import einlesen_stuetzstellen, horner
+from io_input import einlesen_stuetzstellen
 from lagrange import lagrange_interpolation, lagrange_basis
 from newton import newton_interpolation, newton_basis
 from hermite import hermite_interpolation
-from polynom import Polynom
+from polynom import Polynom, MathWithPolynomials
 
 def menu():
     print("\n--- Polynom-Interpolation ---")
@@ -21,20 +21,26 @@ def menu():
     print("4. Beenden")
     return input("Bitte wählen Sie eine Option (1-4): ")
 
+
+def format_poly(poly_object):
+    """Gibt die Koeffizienten-Liste des Polynom-Objekts zur Formatierung weiter."""
+    # HIER wird das Attribut .coeffs des Polynom-Objekts an die Druckfunktion übergeben!
+    return MathWithPolynomials.print_poly_schoen(poly_object.coeffs)
+
 def auswahl_lagrange(x_wert, y_wert):
     print("\n--- Lagrange-Basis-Polynome ---")
     basisfunktionen = []
     for i in range(len(x_wert)):
         L = lagrange_basis(x_wert, i)
         basisfunktionen.append(L)
-        print(f"L_{i}(x) = {L}")
+        print(f"L_{i}(x) = {format_poly(L)}") 
 
     print("\n--- Lagrange-Interpolationspolynom ---")
     P = lagrange_interpolation(x_wert, [y[0] for y in y_wert])  # nur Funktionswerte
-    print(f"P(x) = {P}")
+    print(f"P(x) = {format_poly(P)}")
 
     x_eval = float(input("\nPolynom an welcher Stelle auswerten? "))
-    wert = horner(P, x_eval)
+    wert = P.horner(x_eval) 
     print(f"P({x_eval}) = {wert}")
 
     return basisfunktionen, P
@@ -45,14 +51,14 @@ def auswahl_newton(x_wert, y_wert):
     for i in range(len(x_wert)):
         Ni = newton_basis(x_wert, i)
         basisfunktionen.append(Ni)
-        print(f"N_{i}(x) = {Ni}")
+        print(f"N_{i}(x) = {format_poly(Ni)}")
 
     print("\n--- Newton-Interpolationspolynom ---")
     P = newton_interpolation(x_wert, [y[0] for y in y_wert])
-    print(f"P(x) = {P}")
+    print(f"P(x) = {format_poly(P)}")
 
     x_eval = float(input("\nPolynom an welcher Stelle auswerten? "))
-    wert = horner(P, x_eval)
+    wert = P.horner(x_eval) 
     print(f"P({x_eval}) = {wert}")
 
     return basisfunktionen, P
@@ -60,11 +66,11 @@ def auswahl_newton(x_wert, y_wert):
 def auswahl_hermite(x_wert, y_wert):
     print("\n--- Hermite-Interpolation ---")
     P = hermite_interpolation(x_wert, y_wert)
-    print(f"H(x) = {P}")
+    print(f"H(x) = {format_poly(P)}")
 
     x_eval = float(input("\nPolynom an welcher Stelle auswerten? "))
-    wert = horner(P, x_eval)
-    print(f"H({x_eval}) = {wert}")
+    wert = P.horner(x_eval) 
+    print(f"P({x_eval}) = {wert}")
 
     return P
 
